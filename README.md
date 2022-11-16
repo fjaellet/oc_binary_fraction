@@ -2,6 +2,8 @@
 
 This repository contains the complementary code for [Donada et al. (2023)](arXiv link here).
 
+![BFage](im/age_BF_tot_scatterplot_auxmeanmass.png)
+
 The notebooks are structured as follows:
 
 * [compute_binaryfraction.ipynb](compute_binaryfraction.ipynb): Demonstrates how to run our mixture model with emcee on the Gaia colour-magnitude diagrams of open-cluster main sequences. Can be used to reproduce Figs. 3 and 4 in our paper. 
