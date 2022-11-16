@@ -1,0 +1,5 @@
+data/GOG_Simulations/*
+im_mcmc/*
+.ipynb_checkpoints/
+*.swp
+__pycache__/

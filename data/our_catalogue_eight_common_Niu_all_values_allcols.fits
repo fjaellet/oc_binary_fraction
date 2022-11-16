@@ -1,0 +1,246 @@
+SIMPLE  =                    T / Standard FITS format                           BITPIX  =                    8 / Character data                                 NAXIS   =                    1 / Text string                                    NAXIS1  =                 8467 / Number of characters                           VOTMETA =                    T / Table metadata in VOTable format               EXTEND  =                    T / There are standard extensions                  COMMENT                                                                         COMMENT The data in this primary HDU consists of bytes which                    COMMENT comprise a VOTABLE document.                                            COMMENT The VOTable describes the metadata of the table contained               COMMENT in the following BINTABLE extension.                                    COMMENT Such a BINTABLE extension can be used on its own as a perfectly         COMMENT good table, but the information from this HDU may provide some          COMMENT useful additional metadata.                                             COMMENT There is one following BINTABLE.                                        NTABLE  =                    1 / Number of following BINTABLE HDUs              END                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             <?xml version='1.0'?>
+<VOTABLE version="1.4"
+ xmlns="http://www.ivoa.net/xml/VOTable/v1.3">
+<!--
+ !  VOTable written by STIL version 4.0 (uk.ac.starlink.votable.VOTableWriter)
+ !  at 2022-06-06T12:42:38
+ !-->
+<RESOURCE>
+<!-- Describes BINTABLE extensions in the following HDU.-->
+<TABLE name="Joined" nrows="8">
+<PARAM arraysize="19" datatype="char" name="DATE-HDU" value="2022-06-06T11:36:22">
+<DESCRIPTION>Date of HDU creation (UTC)</DESCRIPTION>
+</PARAM>
+<PARAM datatype="double" name="STILVERS" value="4.0">
+<DESCRIPTION>Version of STIL software</DESCRIPTION>
+</PARAM>
+<PARAM arraysize="42" datatype="char" name="STILCLAS" value="uk.ac.starlink.votable.FitsPlusTableWriter">
+<DESCRIPTION>STIL Author class</DESCRIPTION>
+</PARAM>
+<FIELD arraysize="17" datatype="char" name="Cluster"/>
+<FIELD datatype="float" name="RA_ICRS"/>
+<FIELD datatype="float" name="DE_ICRS"/>
+<FIELD datatype="float" name="GLON_1"/>
+<FIELD datatype="float" name="GLAT_1"/>
+<FIELD datatype="float" name="r50"/>
+<FIELD datatype="short" name="nbstars07">
+<VALUES null='-32768'/>
+</FIELD>
+<FIELD datatype="float" name="pmRA_1"/>
+<FIELD datatype="float" name="e_pmRA"/>
+<FIELD datatype="float" name="pmDE_1"/>
+<FIELD datatype="float" name="e_pmDE"/>
+<FIELD datatype="float" name="plx_1"/>
+<FIELD datatype="float" name="e_plx"/>
+<FIELD arraysize="6" datatype="char" name="Flag"/>
+<FIELD datatype="float" name="AgeNN_1"/>
+<FIELD datatype="float" name="AVNN"/>
+<FIELD datatype="float" name="DMNN"/>
+<FIELD datatype="float" name="DistPc"/>
+<FIELD datatype="float" name="X"/>
+<FIELD datatype="float" name="Y"/>
+<FIELD datatype="float" name="Z"/>
+<FIELD datatype="float" name="Rgc"/>
+<FIELD arraysize="23" datatype="char" name="SimbadName"/>
+<FIELD datatype="double" name="_RA_icrs"/>
+<FIELD datatype="float" name="_DE_icrs"/>
+<FIELD datatype="short" name="nb_MS_members">
+<VALUES null='-32768'/>
+</FIELD>
+<FIELD datatype="double" name="BP_RP_0_min"/>
+<FIELD datatype="double" name="BP_RP_0_max"/>
+<FIELD datatype="double" name="mass_min">
+<DESCRIPTION>In solar masses</DESCRIPTION>
+</FIELD>
+<FIELD datatype="double" name="mass_max">
+<DESCRIPTION>In solar masses</DESCRIPTION>
+</FIELD>
+<FIELD datatype="short" name="nsteps_MCMC">
+<VALUES null='-32768'/>
+</FIELD>
+<FIELD datatype="short" name="burnin_MCMC">
+<VALUES null='-32768'/>
+</FIELD>
+<FIELD datatype="double" name="MS_width_MCMC"/>
+<FIELD datatype="float" name="acc_frac"/>
+<FIELD datatype="float" name="fb_50"/>
+<FIELD datatype="float" name="fb_sigu"/>
+<FIELD datatype="float" name="fb_sigl"/>
+<FIELD datatype="double" name="nominal_fb_error">
+<DESCRIPTION>Expression: (fb_sigu+fb_sigl)/2.</DESCRIPTION>
+</FIELD>
+<FIELD datatype="float" name="DG_50"/>
+<FIELD datatype="float" name="DG_sigu"/>
+<FIELD datatype="float" name="DG_sigl"/>
+<FIELD datatype="float" name="sM_50"/>
+<FIELD datatype="float" name="sM_sigu"/>
+<FIELD datatype="float" name="sM_sigl"/>
+<FIELD datatype="float" name="sB_50"/>
+<FIELD datatype="float" name="sB_sigu"/>
+<FIELD datatype="float" name="sB_sigl"/>
+<FIELD datatype="float" name="Fidelity_JD"/>
+<FIELD arraysize="2" datatype="char" name="mcmc_classification"/>
+<FIELD datatype="float" name="Fidelity_Carme"/>
+<FIELD arraysize="6" datatype="char" name="Class_Carme"/>
+<FIELD datatype="float" name="Fidelity_FA"/>
+<FIELD arraysize="7" datatype="char" name="Flag_FA"/>
+<FIELD datatype="double" name="Fidelity"/>
+<FIELD datatype="float" name="fb_res_grt06_over_fb_unres_grt06">
+<DESCRIPTION>Expression: fb_50/(0.12171208*log10(DistPc_1)-0.15247168)</DESCRIPTION>
+</FIELD>
+<FIELD datatype="float" name="fb_res_grt065_over_fb_unres_grt065"/>
+<FIELD datatype="float" name="fb_res_grt045_over_fb_unres_grt045"/>
+<FIELD datatype="float" name="fb_tot_greater06"/>
+<FIELD datatype="float" name="fb_tot_greater06_sigu"/>
+<FIELD datatype="float" name="fb_tot_greater06_sigl"/>
+<FIELD datatype="double" name="MS_width_GMM"/>
+<FIELD datatype="short" name="nb_opt_GMM_comp">
+<DESCRIPTION>Absolute value of the difference in delta(G) position</DESCRIPTION>
+<VALUES null='-32768'/>
+</FIELD>
+<FIELD datatype="double" name="MS_gauss_mean">
+<DESCRIPTION>2: BIC minimum for 2 Gaussians</DESCRIPTION>
+</FIELD>
+<FIELD datatype="double" name="MS_gauss_sd">
+<DESCRIPTION>Expression: binaries_gauss_mean - MS_gauss_mean</DESCRIPTION>
+</FIELD>
+<FIELD datatype="double" name="MS_gauss_weight">
+<DESCRIPTION>Expression: BF_GMM_percent/100.</DESCRIPTION>
+</FIELD>
+<FIELD datatype="double" name="binaries_gauss_mean">
+<DESCRIPTION>Expression: BF_GMM_error_percent/100.</DESCRIPTION>
+</FIELD>
+<FIELD datatype="double" name="binaries_gauss_sd">
+<DESCRIPTION>Number of extrema of the fitted MS polynomial</DESCRIPTION>
+</FIELD>
+<FIELD datatype="double" name="binaries_gauss_weight" utype="topcat_session:flags_0"/>
+<FIELD datatype="double" name="deltaG"/>
+<FIELD datatype="double" name="BF_GMM"/>
+<FIELD datatype="double" name="BF_GMM_error"/>
+<FIELD datatype="double" name="abs_diff_MS_gauss_mean_binaries_gauss_mean"/>
+<FIELD datatype="short" name="bayes_IC_flag">
+<VALUES null='-32768'/>
+</FIELD>
+<FIELD datatype="short" name="akaike_IC_flag">
+<VALUES null='-32768'/>
+</FIELD>
+<FIELD datatype="short" name="poly_decrease">
+<VALUES null='-32768'/>
+</FIELD>
+<FIELD datatype="short" name="nb_extrema">
+<VALUES null='-32768'/>
+</FIELD>
+<FIELD datatype="short" name="TC_flags_0">
+<VALUES null='-32768'/>
+</FIELD>
+<FIELD arraysize="17" datatype="char" name="oc"/>
+<FIELD datatype="float" name="ageNN_2"/>
+<FIELD datatype="float" name="dist"/>
+<FIELD datatype="float" name="nb_stars"/>
+<FIELD datatype="double" name="RAdeg"/>
+<FIELD datatype="double" name="DEdeg"/>
+<FIELD datatype="double" name="pmRA_2"/>
+<FIELD datatype="double" name="sigpmRA"/>
+<FIELD datatype="double" name="pmDE_2"/>
+<FIELD datatype="double" name="sigpmDE"/>
+<FIELD datatype="double" name="plx_2"/>
+<FIELD datatype="double" name="sigplx"/>
+<FIELD datatype="double" name="GLON_2"/>
+<FIELD datatype="double" name="GLAT_2"/>
+<FIELD datatype="double" name="Rc"/>
+<FIELD datatype="double" name="Rt"/>
+<FIELD datatype="double" name="e_Rc_low"/>
+<FIELD datatype="double" name="e_Rc_up"/>
+<FIELD datatype="double" name="e_Rt_low"/>
+<FIELD datatype="double" name="e_Rt_up"/>
+<FIELD arraysize="19" datatype="char" name="flag_Rc"/>
+<FIELD arraysize="19" datatype="char" name="flag_Rt"/>
+<FIELD datatype="double" name="axis_ratio_core"/>
+<FIELD datatype="double" name="axis_ratio_tail"/>
+<FIELD datatype="double" name="axis_ratio_halo"/>
+<FIELD datatype="double" name="weights_core"/>
+<FIELD datatype="double" name="weights_tail"/>
+<FIELD datatype="double" name="weights_halo"/>
+<FIELD datatype="double" name="angle_core"/>
+<FIELD datatype="double" name="angle_tail"/>
+<FIELD datatype="double" name="angle_halo"/>
+<FIELD datatype="double" name="a_core"/>
+<FIELD datatype="double" name="b_core"/>
+<FIELD datatype="double" name="a_tail"/>
+<FIELD datatype="double" name="b_tail"/>
+<FIELD datatype="double" name="a_halo"/>
+<FIELD datatype="double" name="b_halo"/>
+<FIELD datatype="double" name="e_weights_core"/>
+<FIELD datatype="double" name="e_weights_tail"/>
+<FIELD datatype="double" name="e_weights_halo"/>
+<FIELD datatype="double" name="e_a_core"/>
+<FIELD datatype="double" name="e_b_core"/>
+<FIELD datatype="double" name="e_a_tail"/>
+<FIELD datatype="double" name="e_b_tail"/>
+<FIELD datatype="double" name="e_a_halo"/>
+<FIELD datatype="double" name="e_b_halo"/>
+<FIELD datatype="double" name="e_angle_core"/>
+<FIELD datatype="double" name="e_angle_tail"/>
+<FIELD datatype="double" name="e_angle_halo"/>
+<FIELD datatype="double" name="e_axis_ratio_core"/>
+<FIELD datatype="double" name="e_axis_ratio_tail"/>
+<FIELD datatype="double" name="e_axis_ratio_halo"/>
+<FIELD datatype="float" name="N_stars_segregated"/>
+<FIELD datatype="double" name="lambda_10"/>
+<FIELD datatype="double" name="e_lambda_10"/>
+<FIELD datatype="double" name="m_min_Niu" unit="solar masses">
+<DESCRIPTION>Expression: 0.0</DESCRIPTION>
+</FIELD>
+<FIELD datatype="double" name="m_max_Niu" unit="solar masses">
+<DESCRIPTION>Expression: 0.0</DESCRIPTION>
+</FIELD>
+<FIELD datatype="double" name="f_bin_Niu_table3">
+<DESCRIPTION>Expression: 0.0</DESCRIPTION>
+</FIELD>
+<FIELD datatype="double" name="error_f_bin_Niu_table3">
+<DESCRIPTION>Expression: 0.0</DESCRIPTION>
+</FIELD>
+<!-- Dummy VOTable - no DATA element -->
+</TABLE>
+</RESOURCE>
+</VOTABLE>
+                                                                                                                                                                             XTENSION= 'BINTABLE'           / binary table extension                         BITPIX  =                    8 / 8-bit bytes                                    NAXIS   =                    2 / 2-dimensional table                            NAXIS1  =                  888 / width of table in bytes                        NAXIS2  =                    8 / number of rows in table                        PCOUNT  =                    0 / size of special data area                      GCOUNT  =                    1 / one data group                                 TFIELDS =                  136 / number of columns                              EXTNAME = 'Joined  '           / table name                                     TTYPE1  = 'Cluster '           / label for column 1                             TFORM1  = '17A     '           / format for column 1                            TTYPE2  = 'RA_ICRS '           / label for column 2                             TFORM2  = 'E       '           / format for column 2                            TTYPE3  = 'DE_ICRS '           / label for column 3                             TFORM3  = 'E       '           / format for column 3                            TTYPE4  = 'GLON_1  '           / label for column 4                             TFORM4  = 'E       '           / format for column 4                            TTYPE5  = 'GLAT_1  '           / label for column 5                             TFORM5  = 'E       '           / format for column 5                            TTYPE6  = 'r50     '           / label for column 6                             TFORM6  = 'E       '           / format for column 6                            TTYPE7  = 'nbstars07'          / label for column 7                             TFORM7  = 'I       '           / format for column 7                            TNULL7  =               -32768 / blank value for column 7                       TTYPE8  = 'pmRA_1  '           / label for column 8                             TFORM8  = 'E       '           / format for column 8                            TTYPE9  = 'e_pmRA  '           / label for column 9                             TFORM9  = 'E       '           / format for column 9                            TTYPE10 = 'pmDE_1  '           / label for column 10                            TFORM10 = 'E       '           / format for column 10                           TTYPE11 = 'e_pmDE  '           / label for column 11                            TFORM11 = 'E       '           / format for column 11                           TTYPE12 = 'plx_1   '           / label for column 12                            TFORM12 = 'E       '           / format for column 12                           TTYPE13 = 'e_plx   '           / label for column 13                            TFORM13 = 'E       '           / format for column 13                           TTYPE14 = 'Flag    '           / label for column 14                            TFORM14 = '6A      '           / format for column 14                           TTYPE15 = 'AgeNN_1 '           / label for column 15                            TFORM15 = 'E       '           / format for column 15                           TTYPE16 = 'AVNN    '           / label for column 16                            TFORM16 = 'E       '           / format for column 16                           TTYPE17 = 'DMNN    '           / label for column 17                            TFORM17 = 'E       '           / format for column 17                           TTYPE18 = 'DistPc  '           / label for column 18                            TFORM18 = 'E       '           / format for column 18                           TTYPE19 = 'X       '           / label for column 19                            TFORM19 = 'E       '           / format for column 19                           TTYPE20 = 'Y       '           / label for column 20                            TFORM20 = 'E       '           / format for column 20                           TTYPE21 = 'Z       '           / label for column 21                            TFORM21 = 'E       '           / format for column 21                           TTYPE22 = 'Rgc     '           / label for column 22                            TFORM22 = 'E       '           / format for column 22                           TTYPE23 = 'SimbadName'         / label for column 23                            TFORM23 = '23A     '           / format for column 23                           TTYPE24 = '_RA_icrs'           / label for column 24                            TFORM24 = 'D       '           / format for column 24                           TTYPE25 = '_DE_icrs'           / label for column 25                            TFORM25 = 'E       '           / format for column 25                           TTYPE26 = 'nb_MS_members'      / label for column 26                            TFORM26 = 'I       '           / format for column 26                           TNULL26 =               -32768 / blank value for column 26                      TTYPE27 = 'BP_RP_0_min'        / label for column 27                            TFORM27 = 'D       '           / format for column 27                           TTYPE28 = 'BP_RP_0_max'        / label for column 28                            TFORM28 = 'D       '           / format for column 28                           TTYPE29 = 'mass_min'           / label for column 29                            TFORM29 = 'D       '           / format for column 29                           TCOMM29 = 'In solar masses'                                                     TTYPE30 = 'mass_max'           / label for column 30                            TFORM30 = 'D       '           / format for column 30                           TCOMM30 = 'In solar masses'                                                     TTYPE31 = 'nsteps_MCMC'        / label for column 31                            TFORM31 = 'I       '           / format for column 31                           TNULL31 =               -32768 / blank value for column 31                      TTYPE32 = 'burnin_MCMC'        / label for column 32                            TFORM32 = 'I       '           / format for column 32                           TNULL32 =               -32768 / blank value for column 32                      TTYPE33 = 'MS_width_MCMC'      / label for column 33                            TFORM33 = 'D       '           / format for column 33                           TTYPE34 = 'acc_frac'           / label for column 34                            TFORM34 = 'E       '           / format for column 34                           TTYPE35 = 'fb_50   '           / label for column 35                            TFORM35 = 'E       '           / format for column 35                           TTYPE36 = 'fb_sigu '           / label for column 36                            TFORM36 = 'E       '           / format for column 36                           TTYPE37 = 'fb_sigl '           / label for column 37                            TFORM37 = 'E       '           / format for column 37                           TTYPE38 = 'nominal_fb_error'   / label for column 38                            TFORM38 = 'D       '           / format for column 38                           TCOMM38 = 'Expression: (fb_sigu+fb_sigl)/2.'                                    TTYPE39 = 'DG_50   '           / label for column 39                            TFORM39 = 'E       '           / format for column 39                           TTYPE40 = 'DG_sigu '           / label for column 40                            TFORM40 = 'E       '           / format for column 40                           TTYPE41 = 'DG_sigl '           / label for column 41                            TFORM41 = 'E       '           / format for column 41                           TTYPE42 = 'sM_50   '           / label for column 42                            TFORM42 = 'E       '           / format for column 42                           TTYPE43 = 'sM_sigu '           / label for column 43                            TFORM43 = 'E       '           / format for column 43                           TTYPE44 = 'sM_sigl '           / label for column 44                            TFORM44 = 'E       '           / format for column 44                           TTYPE45 = 'sB_50   '           / label for column 45                            TFORM45 = 'E       '           / format for column 45                           TTYPE46 = 'sB_sigu '           / label for column 46                            TFORM46 = 'E       '           / format for column 46                           TTYPE47 = 'sB_sigl '           / label for column 47                            TFORM47 = 'E       '           / format for column 47                           TTYPE48 = 'Fidelity_JD'        / label for column 48                            TFORM48 = 'E       '           / format for column 48                           TTYPE49 = 'mcmc_classification' / label for column 49                           TFORM49 = '2A      '           / format for column 49                           TTYPE50 = 'Fidelity_Carme'     / label for column 50                            TFORM50 = 'E       '           / format for column 50                           TTYPE51 = 'Class_Carme'        / label for column 51                            TFORM51 = '6A      '           / format for column 51                           TTYPE52 = 'Fidelity_FA'        / label for column 52                            TFORM52 = 'E       '           / format for column 52                           TTYPE53 = 'Flag_FA '           / label for column 53                            TFORM53 = '7A      '           / format for column 53                           TTYPE54 = 'Fidelity'           / label for column 54                            TFORM54 = 'D       '           / format for column 54                           TTYPE55 = 'fb_res_grt06_over_fb_unres_grt06' / label for column 55              TFORM55 = 'E       '           / format for column 55                           TCOMM55 = 'Expression: fb_50/(0.12171208*log10(DistPc_1)-0.15247168)'           TTYPE56 = 'fb_res_grt065_over_fb_unres_grt065' / label for column 56            TFORM56 = 'E       '           / format for column 56                           TTYPE57 = 'fb_res_grt045_over_fb_unres_grt045' / label for column 57            TFORM57 = 'E       '           / format for column 57                           TTYPE58 = 'fb_tot_greater06'   / label for column 58                            TFORM58 = 'E       '           / format for column 58                           TTYPE59 = 'fb_tot_greater06_sigu' / label for column 59                         TFORM59 = 'E       '           / format for column 59                           TTYPE60 = 'fb_tot_greater06_sigl' / label for column 60                         TFORM60 = 'E       '           / format for column 60                           TTYPE61 = 'MS_width_GMM'       / label for column 61                            TFORM61 = 'D       '           / format for column 61                           TTYPE62 = 'nb_opt_GMM_comp'    / label for column 62                            TFORM62 = 'I       '           / format for column 62                           TNULL62 =               -32768 / blank value for column 62                      TCOMM62 = 'Absolute value of the difference in delta(G) position'               TTYPE63 = 'MS_gauss_mean'      / label for column 63                            TFORM63 = 'D       '           / format for column 63                           TCOMM63 = '2: BIC minimum for 2 Gaussians'                                      TTYPE64 = 'MS_gauss_sd'        / label for column 64                            TFORM64 = 'D       '           / format for column 64                           TCOMM64 = 'Expression: binaries_gauss_mean - MS_gauss_mean'                     TTYPE65 = 'MS_gauss_weight'    / label for column 65                            TFORM65 = 'D       '           / format for column 65                           TCOMM65 = 'Expression: BF_GMM_percent/100.'                                     TTYPE66 = 'binaries_gauss_mean' / label for column 66                           TFORM66 = 'D       '           / format for column 66                           TCOMM66 = 'Expression: BF_GMM_error_percent/100.'                               TTYPE67 = 'binaries_gauss_sd'  / label for column 67                            TFORM67 = 'D       '           / format for column 67                           TCOMM67 = 'Number of extrema of the fitted MS polynomial'                       TTYPE68 = 'binaries_gauss_weight' / label for column 68                         TFORM68 = 'D       '           / format for column 68                           TUTYP68 = 'topcat_session:flags_0'                                              TTYPE69 = 'deltaG  '           / label for column 69                            TFORM69 = 'D       '           / format for column 69                           TTYPE70 = 'BF_GMM  '           / label for column 70                            TFORM70 = 'D       '           / format for column 70                           TTYPE71 = 'BF_GMM_error'       / label for column 71                            TFORM71 = 'D       '           / format for column 71                           TTYPE72 = 'abs_diff_MS_gauss_mean_binaries_gauss_mean' / label for column 72    TFORM72 = 'D       '           / format for column 72                           TTYPE73 = 'bayes_IC_flag'      / label for column 73                            TFORM73 = 'I       '           / format for column 73                           TNULL73 =               -32768 / blank value for column 73                      TTYPE74 = 'akaike_IC_flag'     / label for column 74                            TFORM74 = 'I       '           / format for column 74                           TNULL74 =               -32768 / blank value for column 74                      TTYPE75 = 'poly_decrease'      / label for column 75                            TFORM75 = 'I       '           / format for column 75                           TNULL75 =               -32768 / blank value for column 75                      TTYPE76 = 'nb_extrema'         / label for column 76                            TFORM76 = 'I       '           / format for column 76                           TNULL76 =               -32768 / blank value for column 76                      TTYPE77 = 'TC_flags_0'         / label for column 77                            TFORM77 = 'I       '           / format for column 77                           TNULL77 =                16959 / blank value for column 77                      TTYPE78 = 'oc      '           / label for column 78                            TFORM78 = '17A     '           / format for column 78                           TTYPE79 = 'ageNN_2 '           / label for column 79                            TFORM79 = 'E       '           / format for column 79                           TTYPE80 = 'dist    '           / label for column 80                            TFORM80 = 'E       '           / format for column 80                           TTYPE81 = 'nb_stars'           / label for column 81                            TFORM81 = 'E       '           / format for column 81                           TTYPE82 = 'RAdeg   '           / label for column 82                            TFORM82 = 'D       '           / format for column 82                           TTYPE83 = 'DEdeg   '           / label for column 83                            TFORM83 = 'D       '           / format for column 83                           TTYPE84 = 'pmRA_2  '           / label for column 84                            TFORM84 = 'D       '           / format for column 84                           TTYPE85 = 'sigpmRA '           / label for column 85                            TFORM85 = 'D       '           / format for column 85                           TTYPE86 = 'pmDE_2  '           / label for column 86                            TFORM86 = 'D       '           / format for column 86                           TTYPE87 = 'sigpmDE '           / label for column 87                            TFORM87 = 'D       '           / format for column 87                           TTYPE88 = 'plx_2   '           / label for column 88                            TFORM88 = 'D       '           / format for column 88                           TTYPE89 = 'sigplx  '           / label for column 89                            TFORM89 = 'D       '           / format for column 89                           TTYPE90 = 'GLON_2  '           / label for column 90                            TFORM90 = 'D       '           / format for column 90                           TTYPE91 = 'GLAT_2  '           / label for column 91                            TFORM91 = 'D       '           / format for column 91                           TTYPE92 = 'Rc      '           / label for column 92                            TFORM92 = 'D       '           / format for column 92                           TTYPE93 = 'Rt      '           / label for column 93                            TFORM93 = 'D       '           / format for column 93                           TTYPE94 = 'e_Rc_low'           / label for column 94                            TFORM94 = 'D       '           / format for column 94                           TTYPE95 = 'e_Rc_up '           / label for column 95                            TFORM95 = 'D       '           / format for column 95                           TTYPE96 = 'e_Rt_low'           / label for column 96                            TFORM96 = 'D       '           / format for column 96                           TTYPE97 = 'e_Rt_up '           / label for column 97                            TFORM97 = 'D       '           / format for column 97                           TTYPE98 = 'flag_Rc '           / label for column 98                            TFORM98 = '19A     '           / format for column 98                           TTYPE99 = 'flag_Rt '           / label for column 99                            TFORM99 = '19A     '           / format for column 99                           TTYPE100= 'axis_ratio_core'    / label for column 100                           TFORM100= 'D       '           / format for column 100                          TTYPE101= 'axis_ratio_tail'    / label for column 101                           TFORM101= 'D       '           / format for column 101                          TTYPE102= 'axis_ratio_halo'    / label for column 102                           TFORM102= 'D       '           / format for column 102                          TTYPE103= 'weights_core'       / label for column 103                           TFORM103= 'D       '           / format for column 103                          TTYPE104= 'weights_tail'       / label for column 104                           TFORM104= 'D       '           / format for column 104                          TTYPE105= 'weights_halo'       / label for column 105                           TFORM105= 'D       '           / format for column 105                          TTYPE106= 'angle_core'         / label for column 106                           TFORM106= 'D       '           / format for column 106                          TTYPE107= 'angle_tail'         / label for column 107                           TFORM107= 'D       '           / format for column 107                          TTYPE108= 'angle_halo'         / label for column 108                           TFORM108= 'D       '           / format for column 108                          TTYPE109= 'a_core  '           / label for column 109                           TFORM109= 'D       '           / format for column 109                          TTYPE110= 'b_core  '           / label for column 110                           TFORM110= 'D       '           / format for column 110                          TTYPE111= 'a_tail  '           / label for column 111                           TFORM111= 'D       '           / format for column 111                          TTYPE112= 'b_tail  '           / label for column 112                           TFORM112= 'D       '           / format for column 112                          TTYPE113= 'a_halo  '           / label for column 113                           TFORM113= 'D       '           / format for column 113                          TTYPE114= 'b_halo  '           / label for column 114                           TFORM114= 'D       '           / format for column 114                          TTYPE115= 'e_weights_core'     / label for column 115                           TFORM115= 'D       '           / format for column 115                          TTYPE116= 'e_weights_tail'     / label for column 116                           TFORM116= 'D       '           / format for column 116                          TTYPE117= 'e_weights_halo'     / label for column 117                           TFORM117= 'D       '           / format for column 117                          TTYPE118= 'e_a_core'           / label for column 118                           TFORM118= 'D       '           / format for column 118                          TTYPE119= 'e_b_core'           / label for column 119                           TFORM119= 'D       '           / format for column 119                          TTYPE120= 'e_a_tail'           / label for column 120                           TFORM120= 'D       '           / format for column 120                          TTYPE121= 'e_b_tail'           / label for column 121                           TFORM121= 'D       '           / format for column 121                          TTYPE122= 'e_a_halo'           / label for column 122                           TFORM122= 'D       '           / format for column 122                          TTYPE123= 'e_b_halo'           / label for column 123                           TFORM123= 'D       '           / format for column 123                          TTYPE124= 'e_angle_core'       / label for column 124                           TFORM124= 'D       '           / format for column 124                          TTYPE125= 'e_angle_tail'       / label for column 125                           TFORM125= 'D       '           / format for column 125                          TTYPE126= 'e_angle_halo'       / label for column 126                           TFORM126= 'D       '           / format for column 126                          TTYPE127= 'e_axis_ratio_core'  / label for column 127                           TFORM127= 'D       '           / format for column 127                          TTYPE128= 'e_axis_ratio_tail'  / label for column 128                           TFORM128= 'D       '           / format for column 128                          TTYPE129= 'e_axis_ratio_halo'  / label for column 129                           TFORM129= 'D       '           / format for column 129                          TTYPE130= 'N_stars_segregated' / label for column 130                           TFORM130= 'E       '           / format for column 130                          TTYPE131= 'lambda_10'          / label for column 131                           TFORM131= 'D       '           / format for column 131                          TTYPE132= 'e_lambda_10'        / label for column 132                           TFORM132= 'D       '           / format for column 132                          TTYPE133= 'm_min_Niu'          / label for column 133                           TFORM133= 'D       '           / format for column 133                          TUNIT133= 'solar masses'       / units for column 133                           TCOMM133= 'Expression: 0.0'                                                     TTYPE134= 'm_max_Niu'          / label for column 134                           TFORM134= 'D       '           / format for column 134                          TUNIT134= 'solar masses'       / units for column 134                           TCOMM134= 'Expression: 0.0'                                                     TTYPE135= 'f_bin_Niu_table3'   / label for column 135                           TFORM135= 'D       '           / format for column 135                          TCOMM135= 'Expression: 0.0'                                                     TTYPE136= 'error_f_bin_Niu_table3' / label for column 136                       TFORM136= 'D       '           / format for column 136                          TCOMM136= 'Expression: 0.0'                                                     DATE-HDU= '2022-06-06T12:42:38' / Date of HDU creation (UTC)                    STILVERS= '4.0     '           / Version of STIL software                       STILCLAS= 'uk.ac.starlink.votable.FitsPlusTableWriter' / STIL Author class      END                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             Melotte_22       BbgmAÀéyC&vFÁ¼éy?£o¸A ²?‡ïÂ6?—l‹@ëo>5?}NN    @üzá>8Qì@±™šC   Âä  AØ  ÂL  F Cl Melotte 22          @LLêJŒMAÀéâ†¿¯ÁàmY;@'ƒ‚¹ÚS?Ç˜G¬4 @[I‚ÎR:˜Ğ@¦ŠşÌ#Z>ÌÌÍ=Ÿ¾w<t¼<t¼?‚n—€   ¿?;d<e`B<e`B>@ƒ;£×
+;£×
+>H´9<‹C–<e`B?€  R ?€  y     ?€  ok     ?ğ      >Ó	(>ÎÚP>ân8=á–P<P~ò<S¿ûø      € ø      ø      ø      ø      ø      ø      ø      ø      ø      ø      € € € €   Melotte_22       @üÌÍC   D˜À @L_¢ÑŒ @8î8š@ü@3õŸ-úz?è+£”º`ÀF²ú«éÆ?ë!ïœ¥À@jÇïÓù-?ĞÖ067¼r@dÒ ³E“ZÀ7Šÿl×K?şh¨yày@3yË×F?Á®"ö¿f?´³yÂ`~?ígvÆ#?ãè(N¦À                                      ?çuÕb¼iëø      ?é–¬ÊÅZè?í1!a@°ø      ?¶vôõÿÂ}@eK¬°ìp¯ø      @]¥'D`åO@DõLM¼@Yµß·]sø      ø      @2÷]–qÕc@.U´Ëñ        ø                              ø      ø                              ø                      ø              @   ?ì6¥ „J?Ûu]Ã_N=?â=p£×
+=@      ?Ú=p£×
+=?¤záG®{NGC_1662         Be`A.¬C;Ë…Á¨²?¬ ç¿bN>fff¿û"Ñ>j~ú@™š=Ä›¦NN    A=q>áG®A\CÖ  ÃÆ  ÂX  Ã  F€ NGC 1662               @R¬1&éA.¬ í?Ö´“àFî@†àıÅ?áñöÕ‰_=?ùæ–TÓ:˜Ğ@ °N|dÕm>½p¤>#×
+=¾w=t¼?£33@   ¿BJ=\)=¾w>„“<´9X<¬1>„“<İ/=o?€  R ?€  y     ?€  ok     ?ğ      >Z
+ >W:˜>iV>F¹ğ=AÄ;=3ø      € ø      ø      ø      ø      ø      ø      ø      ø      ø      ø      € € € €   NGC_1662         A\CÓ€ C€ @R
+Ô@ä@%¨ÿÁärw¿ñxİ†˜œ?Ä†úèTD¿ÿ~)r?ÂÏY@ykãés}?¹Oè£@gzT— ^À5!,ÃS½é?ù ÿœJ@C)‚Îœ?Æ¦‡^mè?ÜÖ9-«Ã×@ Š]Ä î@1Š¡x0                                      ?çºÜÔø      ?ãŠÂ§¹à?ãmÃ´ ¬Yø      ?Ù$x—ş§N@e GK‡‚ø      @ZPÀÕ¸@@èÌ~yƒ@eö ÜwÓø      ø      @7k‰Î·ïì@,šĞø"L>²Ú™ÓYø      >²Ú™ÓY>àJì
+îEÇ>ãl;‘¿¦ø      ø      >şãÁCKª>ñt]jã²?#Wc–°uêø      >ÊPOJüU»>­¬è
+ø      >nÎ°yß½uA   @#’Áïö/?è0Œp91Î?Ü(õÂ\)@ffffff?ÚáG®zá?®¸Që…¸NGC_1750         B—ÚA½\C3wÁ+hs>Ö‡+¡¿uÂ>{çmÀl‹>MÒò?®5?=¸QìNN    A\?J=qAõÃD5À Ä2À A   Ã  F| NGC 1750               @RûC•%A½\;?²JøËèH?ıôæh?mD?ç_2şfÒd?şAĞ>ò­Œ:˜Ğ?üĞEşw>½p¤>\)=o=C–? å`@   ¿<(ö<e`B<Tıô>$İ<#×
+<o>‚J<¬1<›¥ã?€  R ?€  y     ?€  ok     ?ğ      >ø>$(>%¦Ğ>¥|Ö=Nt= üø      € ø      ø      ø      ø      ø      ø      ø      ø      ø      ø      € € € €   NGC_1750         A33D2€ CÈ  @Rú*ğêğ@7±ğÉô1,¿ğîk§•z?º&\'XpşÀAİ0¯–ü?¸¾şí¤Ë?öV;÷w²ë?°-D_‰qØ@fclºÀ%s²Mº%û@…gp~&@;„ª¾ş;?Ö-TĞø ?ÒTJ
+¥@„ÒåQ›P@VVgµ±4                                      ?éÀã<Š/Sø      ?èÁ“~+Å?åY—t2…ø      ?ÕLÑ›âõ@%0f†&@ø      @›ò! U`@ÄsQäĞ@
+ı‡€ïø      ø      @6VÃ¼şF@1GÍ#Ål        ø                              ø      ø                              ø                      ø              @   ?ù†ÜçÇ”?ág^Å’$?ã…¸Që…@
+=p£×
+=?áG®záH?®¸Që…¸NGC_2099         B°%ãB.C1¤Z@E>$İ/p?öE¢>MÒòÀ´¼j>333?*~ú=‹C–manualA
+ff?@  A,záD³  Ä²  Bh  Bš  F¤ NGC 2099               @V¼j~ùÛB.S?Ç©‹gíTğ?õpcÓ?îÉg­q™p?û¢³-Úır:˜Ğ?ò˜ë¹4>½p¤>dZ<¬1<›¥ã?”zá@   ¿©ü<õÂ=o>n˜;£×
+;£×
+>—P;D›¦;å`B?   RW?€  y     ?€  ok     ?êªªªªª«=×6@=ÙG`=Ñ`>|Y<¾f<¬:ø      € ø      ø      ø      ø      ø      ø      ø      ø      ø      ø      € € € €   NGC_2099         A
+ffD­  E0 @Vÿ’¼ş@@E˜k“Ã?şHfd?º§Eb™ieÀwyİ6?¸V«XÑ€?å•5èüñœ?°¼7¹pL@f4m1È|›@nOrœ?üu\†àl>@;ÚlN?´ñòÉaÄ0?»a|«?ô2B»£¬ğ@ tÔ!?X                                      ?ïwú/u&µø      ?ì¸kO…”?ärİÏ¦^6ø      ?×D`³C”@S‚ğ2Æ6·ø      @!¼œe%Ğ@‚jP
+Ì@¬/a†0#ø      ø      @5Ğk¼(@2İXU¡« >Š\[œúÔ¡ø      >Š\[œøÎ…>µA§‘ç0°>¼ÎĞv¼Tø      ø      >Õ­ßÄ¡ş*>Óa×Vv>ìÏt&1gø      >«.gîÉ’“>…½hæäø      >†ÇÖDÒ¬Bx  @¦¨Áµƒ@TkâNÑ9?ç
+=p£×
+@Që…¸R?àõÂ\(ö?¤záG®{NGC_2168         B¸‹DAÂ°!C:›ç@¸R>£Søß@¶F>t¼jÀ9ë…>p£×?Äœ=ƒoNN    A¸R>ë…A£×Db€ Ä`À ÂĞ  B  F` NGC 2168               @Whr° ÅAÂ°!Û¿fj(N„À?ş€ló+\v?çCKIoZ@ ¦$<D:˜Ğ?ş‹¡ô±î$>½p¤>Oß<Ôıô<›¥ã?—
+=€   ¿2-=Oß=\)>Që…;å`B;å`B>‰º^<´9X<ÌÌÍ?€  R ?€  y     ?€  ok     ?ğ      >
+o°>
+6à>¬ > jŒ<ñÉq<°Àø      € ø      ø      ø      ø      ø      ø      ø      ø      ø      ø      € € € €   NGC_2168         A
+=D^  DÀ@ @W†Îl:@8Qtñ‰@÷‹l§å¸?Á¹ßœ› À@›^ÂË:?¿h¡¶ŸÏ›?ò\ü¢è ×?®ígVT|@gT\7ˆ@ï[á`5A@¬úÛ’WZ@9Ğm‚¥…?È ‚È«Ÿ?ÄwYAé©@ Î”N$éè?õ}MÆPR                                      ?íqæÖ!Vø      ?ê`í™-´æ?ãôIXT8´ø      ?ØmOW˜@d–tõüTø      @c11xGj@KÛuB@©Æw—ø      ø      @6oG–gœ@2~^”šl>µx~« ¯pø      >µx~« >å|PP™¶>ã¡°òü!,ø      ø      ?Ø-™·7>ü²âº6 6?4ñxV*Éø      >ÛÌ¿Qˆ0>b1Ş¶Zø      >`r—ãÛx    ?ìJx³0²–?ÓËwó¦Z?ã…¸Që…@p£×
+=q?à      ?´záG®{NGC_2281         BÌ.˜B$=qC.ìÍA‡¬>ÕšÀ<‹D>ŒIºÁ"Ñ>ƒ•?ò°!=¶E¢NN    A£×=¸QìA
+áHD  Ä€ B8  C  F
+h NGC 2281               @Y…Òñ©ûçB$=q}?Ña½ø€^|@>¼Ä5?â¦õÄ²?ú]jØ0¢‚:˜Ğ@Ğı³õe>Â\=Â\<“t¼<uÂ?å`@   ¿=p¤<#×
+<t¼=Ä›¦;ƒo;ƒo>F§ğ<“t¼<e`B?€  R ?€  y     ?€  ok     ?ğ      ><¦Ø>:½¨>Hˆ0=æga<® ½<‘ÌM@Ğı³õf ?<k?»ÍÆ‡ŠAü?ì®´q© ¬¿â³(/tâ¯?Íx&sš„?ºŠ\r¶ú¼¿ã0™ªë?ºŠ\r¶ú¸?ªl-µ?ã0™ªë       NGC_2281         AÌÍD@ Cİ€ @Y†Çm|F@Dˆ ¤6ÀÊß±»r0?¿A ÜøüÀ ŒüPì¤?Á~‹a’¿?şÖ„©·Ïu?²Z}±®@eİ¤åMAç@0ætûQ?ø”×K@?HÌNÎª’?Æ@j5Ş?È—HP¼ËX@‚“)½L@:tØ                                      ?ë& U]İ¡?Ï>,Ü V?êÜ¯ær”?åğ&€M“€?ÈêZ,~ÿş?¾ÁÒ£¾‡@a<?ˆ^¬@erGè@Y*ZúiÛ@	ß±°Ä@ğòî`òV@56y_Nÿp@Ø$ÇLv@6-™«İÂ­@2«·¾`ï>úí¿$„w?û±up¡É?æØÇ{?!ì£Éº¸?"ié˜?zÏ_NW?J•¹YŒ\?zÏ_NW?J•¹YŒ\?Sg²™…í?¸·*ĞZ?”âS´n?>ÎÑ²`Zo$??œO–ÉW?,~Ê?Eê@€  ?ùãuá«?äîS4¶:?ŞzáG®@¸Që…¸?ŞzáG®?¤záG®{NGC_2548         BöÒòÀ·;dCc×Av=q>¼í‘Æ¿¨b>F§ğ?ƒ¶F>6E¢?¤ıô=…¸NN    A	p¤>™šA
+=DA  Ãú  Ä
+  CM  F
+d NGC 2548               @^Ú^5?|îÀ·;dô?Ä	Ëì‹R@ ¤v;ÒS?æ´Ëa¹ƒ?ü-ˆ¶íå:˜Ğ?şÇ³ k°>ÌÌÍ=Æ§ğ<e`B<Tıô?‹¥ã`   ¿=p¤<#×
+<t¼=ñ©ü;ƒo;ƒo>A‰7<e`B<Tıô?€  R ?€  y     ?€  ok     ?ğ      >dˆ>¬x>ğ=ä8^<ƒÁÕ<tèéø      € ø      ø      ø      ø      ø      ø      ø      ø      ø      ø      € € € €   NGC_2548         A	ÂD=À D€ @^Ø¤úºø“ÀöküóÜ¿ôyÛè Ñ?¸6 	Oµ?ğ±Ô4ì0Ä?¸æ£³È±é?ôä^47Rn?³µ|¼ Úl@lzè?H8U@.¸A½w@§Îe¹qË@C_ ™)†?Éù¼&n­ş?Ö¬9Ÿ´@ò|™èĞ@âì\ ^€                                      ?ìnóf6.¬ø      ?éƒò?RT?ägóÒ<ø      ?×óß0[‰@?±À¥ÅîÛø      @aFÙeu@UÖêN@‚‡xÄTø      ø      @4nüÛ¿Êr@0Jö•<´>—ãa	ºø      >—ãa	º‚“>Åò°á4“ˆ>ÄÎ¹‰öğø      ø      >áù¾GNì+>ÙãbJÇ>ù-®*àø      >¼àz^œ>QNˆH“|ø      >af^m)@   ?ù ­ø§g£?â4‡ø†n6?áG®záH@×
+=p£×?ØQë…¸R?®¸Që…¸Roslund_6        C™—®B1'Bœıq?Â?€ƒ ÷@¼  >®{@	ë…>ŒIº@3Æ¨=›¥ãNN    @şff    @ü(öC»€ B”  C¸  @@  FD Cl Roslund 6           @s2õÂ\)B1'¿§Ë@ÒÍ˜@âš Ç¦?ÙH¨•C@ÎÈĞ/Ÿq:˜Ğ@AÆú$ô¬>ÌÌÍ=®{<£×
+<‹C–?’ñª    ¿>ùÛ<49X<49X>t¼;å`B;å`B><j<ƒo<uÂ?€  R ?€  y     ?€  ok     ?ğ      >kÑ°>h{À>|ô=Ö+T<É•t<«»*ø      € ø      ø      ø      ø      ø      ø      ø      ø      ø      ø      € € € €   Roslund_6        @ş¸RC¹€ C  @s7~±Ãó@D
+ >”R‹@Õç`É}?Í6P?“ˆş@T\&Èw?ÄpÀär@•äE0çæ?´1Úœñª@S¶PŞP’?âTg³µ•5@!ç{ã%´@@Pâ?äîÓAlh?çÚyİ @DÆÂ8@ßàhÎà                                      ?à
+*B¾ø      ?âÈøØÈÍ?åQôÿëø      ?Õû\è *@'“=Õ8	0ø      @2Ç qÕ@@$÷%¥@Q¦›ızø      ø      @8ªÆæ} @,õö=åyÈ        ø                              ø      ø                              ø                      ø              @à  ?üĞZ9,?ß
+ˆzëf?ÕÂ\(õÃ@ÌÌÌÌÌÍ?Ú=p£×
+=?´záG®{                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
