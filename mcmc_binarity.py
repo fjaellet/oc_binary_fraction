@@ -3,7 +3,7 @@ import os
 from astropy.table import Table, vstack
 
 from scipy import interpolate
-from scipy.stats import norm
+from scipy.stats import gaussian_kde, norm
 import scipy.optimize as op
 import time
 import emcee
@@ -11,6 +11,7 @@ import corner
 from multiprocessing import Pool
 
 from matplotlib import pyplot as plt
+from matplotlib import transforms
 from matplotlib.ticker import (MultipleLocator, AutoMinorLocator)
 from astroML.plotting import setup_text_plots
 setup_text_plots(fontsize=22, usetex=True)
@@ -117,8 +118,8 @@ def maxlike(theta0, x, y, yerr):
     theta0[:-4] = result["x"]
     return theta0
 
-def run_mcmc(x, y, xerr, yerr, theta0, nwalkers=32, nsteps=15000, burnin=2000,
-             plotdir="../im/mcmc/", clusname="test", save_results=False):
+def run_mcmc(x, y, xerr, yerr, theta0, nwalkers=32, nsteps=8000, burnin=3000,
+             plotdir="../im/mcmc/", clusname="test", save_results=False, plot_max_likelihood=False):
     # Set up the sampler.
     ndim = len(theta0)
     pos = [theta0 + 1e-4*np.random.randn(ndim) for i in range(nwalkers)]
@@ -142,6 +143,8 @@ def run_mcmc(x, y, xerr, yerr, theta0, nwalkers=32, nsteps=15000, burnin=2000,
                                                                         np.round(v[2]-v[1],3), 
                                                                         np.round(v[1]-v[0],3)), 
                                                              zip(*np.percentile(samples, [16, 50, 84], axis=0)))
+        # Save the last 100 samples
+        np.savez(plotdir + "samples_mcmc_" + clusname + ".npz", samples = samples[:100])
         # MCMC iteration plot
         plt.clf()
         fig, axes = plt.subplots(ndim, 1, sharex=True, figsize=(8, 3*ndim))
@@ -165,17 +168,22 @@ def run_mcmc(x, y, xerr, yerr, theta0, nwalkers=32, nsteps=15000, burnin=2000,
         # CMD plot
         plt.figure(figsize=(8,8))
         plt.errorbar(x,y,xerr=xerr, yerr=yerr, ls='none', label=None, c="grey", zorder=0)
-        plt.scatter(x,y, label=None, c="k")
+        plt.scatter(x,y, label=None, c="w")
         xarr = np.linspace(np.min(x),np.max(x),100)
-        # Plot the maximum likelihood result.
-        polynom = np.poly1d(theta0[:-4][::-1])
-        plt.plot(xarr, polynom(xarr), lw=2, c="grey", label="Max. likelihood fit")
+        fb_simple=[]
+        if plot_max_likelihood:
+            # Plot the maximum likelihood result.
+            polynom = np.poly1d(theta0[:-4][::-1])
+            plt.plot(xarr, polynom(xarr), lw=2, c="grey", label="Max. likelihood fit")
         # Plot some MCMC samples onto the data.
         for p0,p1,p2,p3,p4,p5,p6,fb,DG,sM,sB in samples[np.random.randint(len(samples), size=30)]:
             ms = np.poly1d([p6,p5,p4,p3,p2,p1,p0])
             plt.plot(xarr, ms(xarr), color="b", alpha=0.2)
             bs = np.poly1d([p6,p5,p4,p3,p2,p1,p0+DG])
             plt.plot(xarr, bs(xarr), color="orange", alpha=0.2)
+            binaries = (y < ms(x) - 3 * sM)
+            fb_simple.append(np.sum(binaries)/len(x))
+            plt.scatter(x[binaries],y[binaries], label=None, c="r", s=30, lw=0.3, alpha=.04)
         # Plot the best-parameter result.
         #polynom = np.poly1d([p6_m[0],p5_m[0],p4_m[0],p3_m[0],p2_m[0],p1_m[0],p0_m[0]])
         plt.plot(xarr, ms(xarr), c='blue', label="MCMC main sequence samples", alpha=0.2)
@@ -192,6 +200,50 @@ def run_mcmc(x, y, xerr, yerr, theta0, nwalkers=32, nsteps=15000, burnin=2000,
         ax.invert_yaxis()
         plt.tight_layout()
         plt.savefig(plotdir+"cmd_fit_mcmc_"+clusname+".png")
+        plt.close()
+        
+        # CMD residual plot
+        plt.figure(figsize=(4,8))
+        ax = plt.subplot(111)
+        # first of all, the base transformation of the data points is needed
+        base = plt.gca().transData
+        rot = transforms.Affine2D().rotate_deg(-90)
+        ax2 = ax.twinx() 
+        edges = [-1.3,.3]
+        kdearr = np.linspace(edges[0], edges[1],1000)
+        kderes = np.zeros(1000)
+        # Overplot the 30 realizations
+        for p0,p1,p2,p3,p4,p5,p6,fb,DG,sM,sB in samples[np.random.randint(len(samples), size=30)]:
+            ms = np.poly1d([p6,p5,p4,p3,p2,p1,p0])
+            # Compute Delta G_i
+            DGi  = (y - ms(x))[(y - ms(x)<edges[1]) & (y - ms(x)>edges[0])]
+            vals, bins, patches = plt.hist(-DGi, density=True, histtype="step", bins="fd", lw=2.5,
+                                           label="Gaia DR2 open clusters ($d < 1.5$ kpc)", alpha=.2, 
+                                           color="grey", transform= rot + base)
+            kde = gaussian_kde(y - ms(x), bw_method=.1)
+            kderes = kderes + kde.evaluate(kdearr)
+        plt.plot(-kdearr, kderes/30, c="k", lw=3, alpha=1, transform= rot + base)
+        # Overplot the 2 Gaussians #fb_m,DG_m,sM_m,sB_m
+        plt.plot(-kdearr, (1-fb_m[0]) * norm.pdf(kdearr, loc=0., scale=sM_m[0]), c="b", lw=3, 
+                 alpha=1, transform= rot + base)
+        plt.plot(-kdearr,   fb_m[0]   * norm.pdf(kdearr, loc=DG_m[0], scale=sB_m[0]), c="r", lw=3, 
+                 alpha=1, transform= rot + base)
+        ax.axhline(0.,      c="b", ls="dashed")
+        ax.axhline(DG_m[0], c="r", ls="dashed")
+        # Beautify the plot
+        ax.set_ylabel(r"$G-P(BP-RP)$  [mag]") 
+        ax.set_xlabel(r"Density") 
+        ax2.set_xlim(0, 1.1*np.max(kderes/30)) 
+        ax2.set_yticks([]) 
+        ax.set_ylim(edges[1], edges[0]) 
+        plt.text(0.25, 0.12, r"$\sigma_{{\rm MS}}={{{0:.2f}}}^{{+{1:.2f}}}_{{-{2:.2f}}}$".format(sM_m[0],sM_m[1],sM_m[2]), 
+                 horizontalalignment='left', verticalalignment='center', transform=ax.transAxes, fontsize=20)
+        plt.text(0.25, 0.5, r"$\Delta G={{{0:.2f}}}^{{+{1:.2f}}}_{{-{2:.2f}}}$".format(DG_m[0],DG_m[1],DG_m[2]), 
+                 horizontalalignment='left', verticalalignment='center', transform=ax.transAxes, fontsize=20)
+        plt.text(0.25, 0.75, r"$\sigma_{{\rm BS}}={{{0:.2f}}}^{{+{1:.2f}}}_{{-{2:.2f}}}$".format(sB_m[0],sB_m[1],sB_m[2]), 
+                 horizontalalignment='left', verticalalignment='center', transform=ax.transAxes, fontsize=20)
+        plt.savefig(plotdir+"cmd_fit_residuals_"+clusname+".png")
+        plt.tight_layout()
         plt.close()
 
         #  save / return the results as a one-row astropy table
@@ -240,7 +292,7 @@ def run_pipeline_tarricq(ocdir="Tarricq_selected_members_OCs/",
         # First find the maximum likelihood values for the simple fit model.
         theta0 = maxlike(theta0, x, y, yerr)
         # Now run MCMC
-        result = run_mcmc(x, y, xerr, yerr, theta0, nwalkers=32, nsteps=15000, burnin=2000,
+        result = run_mcmc(x, y, xerr, yerr, theta0, nwalkers=32, nsteps=8000, burnin=3000,
                           plotdir=plotdir, clusname=clusname, save_results=False)
         # Save the results
         if ii == 0:
@@ -272,7 +324,7 @@ def run_pipeline_cantat(ocdir="data/Cantat_selected_members_OCs_younger50Myr/",
                         (2.5 * np.log10(1 + 1./t["phot_rp_mean_flux_over_error"]))**2. )
         y    = t["Gmag"]
         yerr = 2.5 * np.log10(1 + 1./t["phot_g_mean_flux_over_error"])
-        clusname = files[ii][:-27]
+        clusname = files[ii][:-26]
 
         print("No.", ii, ":", clusname, "(", len(t), "stars )")
 
@@ -282,8 +334,11 @@ def run_pipeline_cantat(ocdir="data/Cantat_selected_members_OCs_younger50Myr/",
         # First find the maximum likelihood values for the simple fit model.
         theta0 = maxlike(theta0, x, y, yerr)
         # Now run MCMC
-        result = run_mcmc(x, y, xerr, yerr, theta0, nwalkers=32, nsteps=15000, burnin=2000,
-                          plotdir=plotdir, clusname=clusname, save_results=False)
+        try:
+            result = run_mcmc(x, y, xerr, yerr, theta0, nwalkers=32, nsteps=8000, burnin=3000,
+                              plotdir=plotdir, clusname=clusname, save_results=False)
+        except:
+            pass
         # Save the results
         if ii == 0:
             restable = result
@@ -323,7 +378,7 @@ def run_pipeline_sims(ocdir="data/GOG_Simulations/Simulation_selected_members_OC
         # First find the maximum likelihood values for the simple fit model.
         theta0 = maxlike(theta0, x, y, yerr)
         # Now run MCMC
-        result = run_mcmc(x, y, xerr, yerr, theta0, nwalkers=32, nsteps=15000, burnin=2000,
+        result = run_mcmc(x, y, xerr, yerr, theta0, nwalkers=32, nsteps=8000, burnin=3000,
                           plotdir=plotdir, clusname=clusname, save_results=False)
         # Save the results
         if ii == 0:
@@ -336,7 +391,14 @@ def run_pipeline_sims(ocdir="data/GOG_Simulations/Simulation_selected_members_OC
         restable.write(restabledir, overwrite=True)
 
 if __name__ == "__main__":
-    # Run the pipeline for the Tarricq+2021 clusters
+    # Run the pipeline for the Tarricq+2022 clusters
     run_pipeline_tarricq(ocdir="data/Tarricq_selected_members_OCs/",
                  restabledir="data/mcmc_results_tarricq_summary.fits",
                  plotdir="im_mcmc/im_mcmc_tarricq/", ii0=0)
+"""
+if __name__ == "__main__":
+    # Run the pipeline for the Cantat+2020 clusters
+    run_pipeline_cantat(ocdir="data/Cantat_selected_members_OCs_younger50Myr/",
+                 restabledir="data/mcmc_results_cantat_summary.fits",
+                 plotdir="im_mcmc/im_mcmc_cantat/", ii0=0)
+"""
