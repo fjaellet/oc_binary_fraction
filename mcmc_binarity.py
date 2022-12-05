@@ -14,6 +14,8 @@ from matplotlib import pyplot as plt
 from matplotlib import transforms
 from matplotlib.ticker import (MultipleLocator, AutoMinorLocator)
 from astroML.plotting import setup_text_plots
+import matplotlib as mpl
+mpl.rcParams.update(mpl.rcParamsDefault)
 setup_text_plots(fontsize=22, usetex=True)
 
 def lnlike(theta, x, y, yerr):
@@ -139,7 +141,7 @@ def maxlike(theta0, x, y, yerr):
     theta0[:-4] = result["x"]
     return theta0
 
-def run_mcmc(x, y, xerr, yerr, theta0, nwalkers=32, nsteps=8000, burnin=3000,
+def run_mcmc(x, y, xerr, yerr, theta0, nwalkers=32, nsteps=10000, burnin=5000,
              plotdir="../im/mcmc/", clusname="test", save_results=False, plot_max_likelihood=False):
     # Set up the sampler.
     ndim = len(theta0)
@@ -147,7 +149,7 @@ def run_mcmc(x, y, xerr, yerr, theta0, nwalkers=32, nsteps=8000, burnin=3000,
 
     print("Running MCMC...")
     with Pool() as pool:
-        sampler = emcee.EnsembleSampler(nwalkers, ndim, lnprob2, args=(x, y, xerr, yerr), pool=pool)
+        sampler = emcee.EnsembleSampler(nwalkers, ndim, lnprob3, args=(x, y, xerr, yerr), pool=pool)
         start = time.time()
         sampler.run_mcmc(pos, nsteps, progress=True)
         end = time.time()
@@ -205,6 +207,7 @@ def run_mcmc(x, y, xerr, yerr, theta0, nwalkers=32, nsteps=8000, burnin=3000,
             binaries = (y < ms(x) - 3 * sM)
             fb_simple.append(np.sum(binaries)/len(x))
             plt.scatter(x[binaries],y[binaries], label=None, c="r", s=30, lw=0.3, alpha=.04)
+        fb_simple = np.array(fb_simple)
         # Plot the best-parameter result.
         #polynom = np.poly1d([p6_m[0],p5_m[0],p4_m[0],p3_m[0],p2_m[0],p1_m[0],p0_m[0]])
         plt.plot(xarr, ms(xarr), c='blue', label="MCMC main sequence samples", alpha=0.2)
@@ -274,12 +277,15 @@ def run_mcmc(x, y, xerr, yerr, theta0, nwalkers=32, nsteps=8000, burnin=3000,
         #  save / return the results as a one-row astropy table
         t = Table(names=('clus', 'nb_MS_members', 'MS_width', 'nsteps', 'burnin', 'acc_frac', 
                          'fb_50', 'fb_sigu', 'fb_sigl', 'DG_50', 'DG_sigu', 'DG_sigl', 
-                         'sM_50', 'sM_sigu', 'sM_sigl', 'sB_50', 'sB_sigu', 'sB_sigl', 'chi2'), 
+                         'sM_50', 'sM_sigu', 'sM_sigl', 'sB_50', 'sB_sigu', 'sB_sigl', 
+                         'chi2', 'fb_simple_50', 'fb_simple_sigu', 'fb_simple_sigl'), 
                   dtype=('S20', 'i4', 'f4', 'i4', 'i4', 'f4', 
-                         'f4', 'f4', 'f4', 'f4', 'f4', 'f4', 'f4', 'f4', 'f4', 'f4', 'f4', 'f4', 'f4'))
+                         'f4', 'f4', 'f4', 'f4', 'f4', 'f4', 'f4', 'f4', 'f4', 'f4', 'f4', 'f4', 'f4', 'f4', 'f4', 'f4'))
         t.add_row((clusname, len(x), np.max(x)-np.min(x), nsteps, burnin, np.round(acc_frac,2), 
                    fb_m[0], fb_m[1], fb_m[2], DG_m[0], DG_m[1], DG_m[2], 
-                   sM_m[0], sM_m[1], sM_m[2], sB_m[0], sB_m[1], sB_m[2], chi2))        
+                   sM_m[0], sM_m[1], sM_m[2], sB_m[0], sB_m[1], sB_m[2], chi2, 
+                   np.round(np.median(fb_simple),3), np.round(np.percentile(fb_simple, 84)-np.median(fb_simple),3), 
+                   np.round(np.median(fb_simple)-np.percentile(fb_simple, 16),3) ))       
         if save_results:
             t.write(plotdir + clusname + "_mcmc_res.fits")
         else:
@@ -360,7 +366,7 @@ def run_pipeline_cantat(ocdir="data/Cantat_selected_members_OCs_younger50Myr/",
         theta0 = maxlike(theta0, x, y, yerr)
         # Now run MCMC
         try:
-            result = run_mcmc(x, y, xerr, yerr, theta0, nwalkers=32, nsteps=8000, burnin=3000,
+            result = run_mcmc(x, y, xerr, yerr, theta0, nwalkers=32, 
                               plotdir=plotdir, clusname=clusname, save_results=False)
         except:
             pass
@@ -403,17 +409,20 @@ def run_pipeline_sims(ocdir="data/GOG_Simulations/Simulation_selected_members_OC
         # First find the maximum likelihood values for the simple fit model.
         theta0 = maxlike(theta0, x, y, yerr)
         # Now run MCMC
-        result = run_mcmc(x, y, xerr, yerr, theta0, nwalkers=32, nsteps=8000, burnin=3000,
-                          plotdir=plotdir, clusname=clusname, save_results=False)
+        try:
+            result = run_mcmc(x, y, xerr, yerr, theta0, nwalkers=32, 
+                              plotdir=plotdir, clusname=clusname, save_results=False)
+        except:
+            pass
         # Save the results
-        if ii == 0:
-            restable = result
+        if result == None:
+            pass
         else:
-            if result == None:
-                pass
+            if ii == 0:
+                restable = result
             else:
                 restable = vstack([restable, result])
-        restable.write(restabledir, overwrite=True)
+            restable.write(restabledir, overwrite=True)
 
 if __name__ == "__main__":
     # Run the pipeline for the Tarricq+2022 clusters
@@ -427,3 +436,4 @@ if __name__ == "__main__":
                  restabledir="data/mcmc_results_cantat_summary.fits",
                  plotdir="im_mcmc/im_mcmc_cantat/", ii0=0)
 """
+
