@@ -91,10 +91,25 @@ def lnprior2(theta):
     # Unpack theta: First the polynomial coeffs, then the binarity parameters
     polycoeffs               = theta[:-4]
     fb, DeltaG, sigMS, sigBS = theta[-4:]
-    if 0 <  fb  < 0.9 and -1 < DeltaG < -0.4 and 0 < sigMS < 0.3 and 0 < sigBS < 0.3:
+    if 0 <  fb  < 0.9 and -1 < DeltaG < -0.4 and 0 < sigMS < 0.4 and 0 < sigBS < 0.4:
         return norm.pdf(DeltaG, -0.75, 0.05) * \
                norm.pdf(np.log10(sigMS), -1, 0.2) * \
                norm.pdf(np.log10(sigBS), -0.8, 0.2)
+    return -np.inf
+
+def lnprior3(theta):
+    """
+    Return flat priors in fb + Gaussians in DeltaG, sigMS, sigBS + Gaussians in polynomials
+    """
+    # Unpack theta: First the polynomial coeffs, then the binarity parameters
+    p0, p1, p2, p3, p4, p5, p6 = theta[:-4]
+    fb, DeltaG, sigMS, sigBS   = theta[-4:]
+    x = np.arange(-0.5, 4.5, 0.5)
+    if 0 <  fb  < 0.9 and -1 < DeltaG < -0.4 and 0 < sigMS < 0.4 and 0 < sigBS < 0.4:
+        return norm.pdf(DeltaG, -0.75, 0.05) * \
+               norm.pdf(np.log10(sigMS), -1, 0.2) * \
+               norm.pdf(np.log10(sigBS), -0.8, 0.2) * \
+               np.prod(norm.pdf(p1 + 2*p2*x + 3*p3*x**2 + 4*p4*x**3 + 5*p5*x**4 + 6*p6*x**5, -3, 2))
     return -np.inf
 
 def lnprob(theta, x, y, yerr):
@@ -105,6 +120,12 @@ def lnprob(theta, x, y, yerr):
 
 def lnprob2(theta, x, y, xerr, yerr):
     lp = lnprior2(theta)
+    if not np.isfinite(lp):
+        return -np.inf
+    return lp + lnlike2(theta, x, y, xerr, yerr)
+
+def lnprob3(theta, x, y, xerr, yerr):
+    lp = lnprior3(theta)
     if not np.isfinite(lp):
         return -np.inf
     return lp + lnlike2(theta, x, y, xerr, yerr)
@@ -220,23 +241,27 @@ def run_mcmc(x, y, xerr, yerr, theta0, nwalkers=32, nsteps=8000, burnin=3000,
             vals, bins, patches = plt.hist(-DGi, density=True, histtype="step", bins="fd", lw=2.5,
                                            label="Gaia DR2 open clusters ($d < 1.5$ kpc)", alpha=.2, 
                                            color="grey", transform= rot + base)
+            # Compute KDE
             kde = gaussian_kde(y - ms(x), bw_method=.1)
             kderes = kderes + kde.evaluate(kdearr)
         plt.plot(-kdearr, kderes/30, c="k", lw=3, alpha=1, transform= rot + base)
         # Overplot the 2 Gaussians #fb_m,DG_m,sM_m,sB_m
         plt.plot(-kdearr, (1-fb_m[0]) * norm.pdf(kdearr, loc=0., scale=sM_m[0]), c="b", lw=3, 
                  alpha=1, transform= rot + base)
-        plt.plot(-kdearr,   fb_m[0]   * norm.pdf(kdearr, loc=DG_m[0], scale=sB_m[0]), c="r", lw=3, 
+        plt.plot(-kdearr,   fb_m[0]   * norm.pdf(kdearr, loc=DG_m[0], scale=sB_m[0]), c="orange", lw=3, 
                  alpha=1, transform= rot + base)
+        # Compute Chi2 (Residual KDE - 2 Gaussian fit)
+        fit_func = (1-fb_m[0]) * norm.pdf(kdearr, loc=0., scale=sM_m[0]) + fb_m[0] * norm.pdf(kdearr, loc=DG_m[0], scale=sB_m[0])
+        chi2 = np.sum( (kderes - fit_func)**2. )
         ax.axhline(0.,      c="b", ls="dashed")
-        ax.axhline(DG_m[0], c="r", ls="dashed")
+        ax.axhline(DG_m[0], c="orange", ls="dashed")
         # Beautify the plot
         ax.set_ylabel(r"$G-P(BP-RP)$  [mag]") 
         ax.set_xlabel(r"Density") 
-        ax2.set_xlim(0, 1.1*np.max(kderes/30)) 
+        ax2.set_xlim(0, np.max([1.2*np.max(kderes/30), 5.])) 
         ax2.set_yticks([]) 
         ax.set_ylim(edges[1], edges[0]) 
-        plt.text(0.25, 0.12, r"$\sigma_{{\rm MS}}={{{0:.2f}}}^{{+{1:.2f}}}_{{-{2:.2f}}}$".format(sM_m[0],sM_m[1],sM_m[2]), 
+        plt.text(0.25, 0.06, r"$\sigma_{{\rm MS}}={{{0:.2f}}}^{{+{1:.2f}}}_{{-{2:.2f}}}$".format(sM_m[0],sM_m[1],sM_m[2]), 
                  horizontalalignment='left', verticalalignment='center', transform=ax.transAxes, fontsize=20)
         plt.text(0.25, 0.5, r"$\Delta G={{{0:.2f}}}^{{+{1:.2f}}}_{{-{2:.2f}}}$".format(DG_m[0],DG_m[1],DG_m[2]), 
                  horizontalalignment='left', verticalalignment='center', transform=ax.transAxes, fontsize=20)
@@ -249,12 +274,12 @@ def run_mcmc(x, y, xerr, yerr, theta0, nwalkers=32, nsteps=8000, burnin=3000,
         #  save / return the results as a one-row astropy table
         t = Table(names=('clus', 'nb_MS_members', 'MS_width', 'nsteps', 'burnin', 'acc_frac', 
                          'fb_50', 'fb_sigu', 'fb_sigl', 'DG_50', 'DG_sigu', 'DG_sigl', 
-                         'sM_50', 'sM_sigu', 'sM_sigl', 'sB_50', 'sB_sigu', 'sB_sigl'), 
+                         'sM_50', 'sM_sigu', 'sM_sigl', 'sB_50', 'sB_sigu', 'sB_sigl', 'chi2'), 
                   dtype=('S20', 'i4', 'f4', 'i4', 'i4', 'f4', 
-                         'f4', 'f4', 'f4', 'f4', 'f4', 'f4', 'f4', 'f4', 'f4', 'f4', 'f4', 'f4'))
+                         'f4', 'f4', 'f4', 'f4', 'f4', 'f4', 'f4', 'f4', 'f4', 'f4', 'f4', 'f4', 'f4'))
         t.add_row((clusname, len(x), np.max(x)-np.min(x), nsteps, burnin, np.round(acc_frac,2), 
                    fb_m[0], fb_m[1], fb_m[2], DG_m[0], DG_m[1], DG_m[2], 
-                   sM_m[0], sM_m[1], sM_m[2], sB_m[0], sB_m[1], sB_m[2]))        
+                   sM_m[0], sM_m[1], sM_m[2], sB_m[0], sB_m[1], sB_m[2], chi2))        
         if save_results:
             t.write(plotdir + clusname + "_mcmc_res.fits")
         else:
@@ -393,8 +418,8 @@ def run_pipeline_sims(ocdir="data/GOG_Simulations/Simulation_selected_members_OC
 if __name__ == "__main__":
     # Run the pipeline for the Tarricq+2022 clusters
     run_pipeline_tarricq(ocdir="data/Tarricq_selected_members_OCs/",
-                 restabledir="data/mcmc_results_tarricq_summary.fits",
-                 plotdir="im_mcmc/im_mcmc_tarricq/", ii0=0)
+                 restabledir="data/mcmc_results_tarricq_newpriors3.fits",
+                 plotdir="im_mcmc/im_mcmc_tarricq_newpriors3/", ii0=0)
 """
 if __name__ == "__main__":
     # Run the pipeline for the Cantat+2020 clusters
