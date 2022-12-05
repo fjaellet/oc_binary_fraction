@@ -365,14 +365,14 @@ def run_pipeline_cantat(ocdir="data/Cantat_selected_members_OCs_younger50Myr/",
         except:
             pass
         # Save the results
-        if ii == 0:
-            restable = result
+        if result == None:
+            pass
         else:
-            if result == None:
-                pass
+            if ii == 0:
+                restable = result
             else:
                 restable = vstack([restable, result])
-        restable.write(restabledir, overwrite=True)
+            restable.write(restabledir, overwrite=True)
     
 def run_pipeline_sims(ocdir="data/GOG_Simulations/Simulation_selected_members_OCs_0/",
                       restabledir="data/mcmc_results_summary_gausspriors_simulation_0.fits",
