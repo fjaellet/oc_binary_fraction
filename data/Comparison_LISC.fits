@@ -1,0 +1,280 @@
+SIMPLE  =                    T / Standard FITS format                           BITPIX  =                    8 / Character data                                 NAXIS   =                    1 / Text string                                    NAXIS1  =                 5639 / Number of characters                           VOTMETA =                    T / Table metadata in VOTable format               EXTEND  =                    T / There are standard extensions                  COMMENT                                                                         COMMENT The data in this primary HDU consists of bytes which                    COMMENT comprise a VOTABLE document.                                            COMMENT The VOTable describes the metadata of the table contained               COMMENT in the following BINTABLE extension.                                    COMMENT Such a BINTABLE extension can be used on its own as a perfectly         COMMENT good table, but the information from this HDU may provide some          COMMENT useful additional metadata.                                             COMMENT There is one following BINTABLE.                                        NTABLE  =                    1 / Number of following BINTABLE HDUs              END                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             <?xml version='1.0'?>
+<VOTABLE version="1.4"
+ xmlns="http://www.ivoa.net/xml/VOTable/v1.3">
+<!--
+ !  VOTable written by STIL version 4.0 (uk.ac.starlink.votable.VOTableWriter)
+ !  at 2023-01-16T13:09:21
+ !-->
+<RESOURCE>
+<!-- Describes BINTABLE extensions in the following HDU.-->
+<TABLE name="Joined" nrows="53">
+<DESCRIPTION>
+id        ra       dec      plx       sig_plx   ÃÂ¼ÃÂ±cosÃÂ´   sig_ÃÂ¼ÃÂ±cosÃÂ´  ÃÂ¼ÃÂ´       sig_ÃÂ¼ÃÂ´  rsc    m_M    E(V-I)  Z       t/t_range  f_bin  f_rot
+          [deg]    [deg]    [mas]               [mas/yr]             [mas/yr]                [mag]  [mag]           [Gyr]
+</DESCRIPTION>
+<PARAM arraysize="19" datatype="char" name="DATE-HDU" value="2023-01-14T16:56:01"/>
+<PARAM datatype="double" name="STILVERS" value="4.0"/>
+<PARAM arraysize="42" datatype="char" name="STILCLAS" value="uk.ac.starlink.votable.FitsPlusTableWriter"/>
+<PARAM arraysize="33" datatype="char" name="Match type" value="Pair match; Best match, symmetric">
+<DESCRIPTION>Type of match which created this table</DESCRIPTION>
+</PARAM>
+<PARAM arraysize="3" datatype="char" name="Match algorithm" value="Sky">
+<DESCRIPTION>Matching algorithm which created this table</DESCRIPTION>
+</PARAM>
+<PARAM arraysize="82" datatype="char" name="Join Type" value="1 and 2 (An output row for each row represented in both input tables (INNER JOIN))">
+<DESCRIPTION>Determines which rows appear in output table</DESCRIPTION>
+</PARAM>
+<PARAM arraysize="31" datatype="char" name="First input table" value="16: fit_parameters_modified.txt"/>
+<PARAM arraysize="36" datatype="char" name="Second input table" value="3: Catalogue_obs_OCs_DEFINITIVE.fits"/>
+<FIELD arraysize="8" datatype="char" name="col1"/>
+<FIELD datatype="float" name="col2"/>
+<FIELD datatype="float" name="col3"/>
+<FIELD datatype="float" name="col4"/>
+<FIELD datatype="float" name="col5"/>
+<FIELD datatype="float" name="col6"/>
+<FIELD datatype="float" name="col7"/>
+<FIELD datatype="float" name="col8"/>
+<FIELD datatype="float" name="col9"/>
+<FIELD datatype="float" name="col10"/>
+<FIELD datatype="float" name="col11"/>
+<FIELD datatype="float" name="col12"/>
+<FIELD datatype="float" name="col13"/>
+<FIELD arraysize="8" datatype="char" name="col14"/>
+<FIELD datatype="float" name="col15"/>
+<FIELD datatype="float" name="col16"/>
+<FIELD arraysize="16" datatype="char" name="Cluster"/>
+<FIELD datatype="float" name="RA_ICRS" unit="deg"/>
+<FIELD datatype="float" name="DE_ICRS" unit="deg"/>
+<FIELD datatype="float" name="GLON" unit="deg"/>
+<FIELD datatype="float" name="GLAT" unit="deg"/>
+<FIELD datatype="float" name="r50" unit="arcsec"/>
+<FIELD datatype="int" name="nbstars07"/>
+<FIELD datatype="float" name="pmRA_" unit="mas yr-1"/>
+<FIELD datatype="float" name="e_pmRA_" unit="mas yr-1"/>
+<FIELD datatype="float" name="pmDE" unit="mas yr-1"/>
+<FIELD datatype="float" name="e_pmDE" unit="mas yr-1"/>
+<FIELD datatype="float" name="plx" unit="mas"/>
+<FIELD datatype="float" name="e_plx" unit="mas"/>
+<FIELD arraysize="14" datatype="char" name="Flag"/>
+<FIELD datatype="float" name="AgeNN" unit="[yr]"/>
+<FIELD datatype="float" name="AVNN" unit="mag"/>
+<FIELD datatype="float" name="DMNN" unit="mag"/>
+<FIELD datatype="float" name="DistPc" unit="pc"/>
+<FIELD datatype="float" name="X" unit="pc"/>
+<FIELD datatype="float" name="Y" unit="pc"/>
+<FIELD datatype="float" name="Z" unit="pc"/>
+<FIELD datatype="float" name="Rgc" unit="pc"/>
+<FIELD arraysize="31" datatype="char" name="SimbadName"/>
+<FIELD datatype="float" name="_RA_icrs" unit="deg">
+<DESCRIPTION>Expression: 1.0</DESCRIPTION>
+</FIELD>
+<FIELD datatype="float" name="_DE_icrs" unit="deg">
+<DESCRIPTION>Expression: (ok_fit) * (Fidelity_2)</DESCRIPTION>
+</FIELD>
+<FIELD datatype="int" name="nb_MS_members"/>
+<FIELD datatype="double" name="BP_RP_0_min"/>
+<FIELD datatype="double" name="BP_RP_0_max"/>
+<FIELD datatype="float" name="MS_width"/>
+<FIELD datatype="double" name="mass_min"/>
+<FIELD datatype="double" name="mass_max"/>
+<FIELD datatype="double" name="mean_mass"/>
+<FIELD datatype="int" name="nsteps"/>
+<FIELD datatype="int" name="burnin"/>
+<FIELD datatype="float" name="acc_frac"/>
+<FIELD datatype="float" name="fb_50"/>
+<FIELD datatype="float" name="fb_sigu"/>
+<FIELD datatype="float" name="fb_sigl"/>
+<FIELD datatype="float" name="DG_50"/>
+<FIELD datatype="float" name="DG_sigu"/>
+<FIELD datatype="float" name="DG_sigl"/>
+<FIELD datatype="float" name="sS_50"/>
+<FIELD datatype="float" name="sS_sigu"/>
+<FIELD datatype="float" name="sS_sigl"/>
+<FIELD datatype="float" name="sB_50"/>
+<FIELD datatype="float" name="sB_sigu"/>
+<FIELD datatype="float" name="sB_sigl"/>
+<FIELD datatype="float" name="KS_pvalue"/>
+<FIELD datatype="float" name="fb_3sScut_50"/>
+<FIELD datatype="float" name="fb_3sScut_sigu"/>
+<FIELD datatype="float" name="fb_3sScut_sigl"/>
+<FIELD datatype="int" name="ok_fit"/>
+<FIELD datatype="short" name="Fidelity_2"/>
+<FIELD datatype="int" name="final_selection"/>
+<FIELD datatype="float" name="fb_res_grt06_over_fb_unres_grt06" unit="pc"/>
+<FIELD datatype="float" name="fb_res_grt065_over_fb_unres_grt065" unit="pc"/>
+<FIELD datatype="float" name="fb_res_grt045_over_fb_unres_grt045" unit="pc"/>
+<FIELD datatype="float" name="fb_tot_qlim06"/>
+<FIELD datatype="float" name="fb_tot_qlim06_sigu"/>
+<FIELD datatype="float" name="fb_tot_qlim06_sigl"/>
+<FIELD datatype="double" name="Separation" ucd="pos.angDistance" unit="arcsec">
+<DESCRIPTION>Distance between matched objects along a great circle</DESCRIPTION>
+</FIELD>
+<!-- Dummy VOTable - no DATA element -->
+</TABLE>
+</RESOURCE>
+</VOTABLE>
+                                                                                                                         XTENSION= 'BINTABLE'           / binary table extension                         BITPIX  =                    8 / 8-bit bytes                                    NAXIS   =                    2 / 2-dimensional table                            NAXIS1  =                  387 / width of table in bytes                        NAXIS2  =                   53 / number of rows in table                        PCOUNT  =                    0 / size of special data area                      GCOUNT  =                    1 / one data group                                 TFIELDS =                   77 / number of columns                              EXTNAME = 'Joined  '           / table name                                     TTYPE1  = 'col1    '           / label for column 1                             TFORM1  = '8A      '           / format for column 1                            TTYPE2  = 'col2    '           / label for column 2                             TFORM2  = 'E       '           / format for column 2                            TTYPE3  = 'col3    '           / label for column 3                             TFORM3  = 'E       '           / format for column 3                            TTYPE4  = 'col4    '           / label for column 4                             TFORM4  = 'E       '           / format for column 4                            TTYPE5  = 'col5    '           / label for column 5                             TFORM5  = 'E       '           / format for column 5                            TTYPE6  = 'col6    '           / label for column 6                             TFORM6  = 'E       '           / format for column 6                            TTYPE7  = 'col7    '           / label for column 7                             TFORM7  = 'E       '           / format for column 7                            TTYPE8  = 'col8    '           / label for column 8                             TFORM8  = 'E       '           / format for column 8                            TTYPE9  = 'col9    '           / label for column 9                             TFORM9  = 'E       '           / format for column 9                            TTYPE10 = 'col10   '           / label for column 10                            TFORM10 = 'E       '           / format for column 10                           TTYPE11 = 'col11   '           / label for column 11                            TFORM11 = 'E       '           / format for column 11                           TTYPE12 = 'col12   '           / label for column 12                            TFORM12 = 'E       '           / format for column 12                           TTYPE13 = 'col13   '           / label for column 13                            TFORM13 = 'E       '           / format for column 13                           TTYPE14 = 'col14   '           / label for column 14                            TFORM14 = '8A      '           / format for column 14                           TTYPE15 = 'col15   '           / label for column 15                            TFORM15 = 'E       '           / format for column 15                           TTYPE16 = 'col16   '           / label for column 16                            TFORM16 = 'E       '           / format for column 16                           TTYPE17 = 'Cluster '           / label for column 17                            TFORM17 = '16A     '           / format for column 17                           TTYPE18 = 'RA_ICRS '           / label for column 18                            TFORM18 = 'E       '           / format for column 18                           TUNIT18 = 'deg     '           / units for column 18                            TTYPE19 = 'DE_ICRS '           / label for column 19                            TFORM19 = 'E       '           / format for column 19                           TUNIT19 = 'deg     '           / units for column 19                            TTYPE20 = 'GLON    '           / label for column 20                            TFORM20 = 'E       '           / format for column 20                           TUNIT20 = 'deg     '           / units for column 20                            TTYPE21 = 'GLAT    '           / label for column 21                            TFORM21 = 'E       '           / format for column 21                           TUNIT21 = 'deg     '           / units for column 21                            TTYPE22 = 'r50     '           / label for column 22                            TFORM22 = 'E       '           / format for column 22                           TUNIT22 = 'arcsec  '           / units for column 22                            TTYPE23 = 'nbstars07'          / label for column 23                            TFORM23 = 'J       '           / format for column 23                           TTYPE24 = 'pmRA_   '           / label for column 24                            TFORM24 = 'E       '           / format for column 24                           TUNIT24 = 'mas yr-1'           / units for column 24                            TTYPE25 = 'e_pmRA_ '           / label for column 25                            TFORM25 = 'E       '           / format for column 25                           TUNIT25 = 'mas yr-1'           / units for column 25                            TTYPE26 = 'pmDE    '           / label for column 26                            TFORM26 = 'E       '           / format for column 26                           TUNIT26 = 'mas yr-1'           / units for column 26                            TTYPE27 = 'e_pmDE  '           / label for column 27                            TFORM27 = 'E       '           / format for column 27                           TUNIT27 = 'mas yr-1'           / units for column 27                            TTYPE28 = 'plx     '           / label for column 28                            TFORM28 = 'E       '           / format for column 28                           TUNIT28 = 'mas     '           / units for column 28                            TTYPE29 = 'e_plx   '           / label for column 29                            TFORM29 = 'E       '           / format for column 29                           TUNIT29 = 'mas     '           / units for column 29                            TTYPE30 = 'Flag    '           / label for column 30                            TFORM30 = '14A     '           / format for column 30                           TTYPE31 = 'AgeNN   '           / label for column 31                            TFORM31 = 'E       '           / format for column 31                           TUNIT31 = '[yr]    '           / units for column 31                            TTYPE32 = 'AVNN    '           / label for column 32                            TFORM32 = 'E       '           / format for column 32                           TUNIT32 = 'mag     '           / units for column 32                            TTYPE33 = 'DMNN    '           / label for column 33                            TFORM33 = 'E       '           / format for column 33                           TUNIT33 = 'mag     '           / units for column 33                            TTYPE34 = 'DistPc  '           / label for column 34                            TFORM34 = 'E       '           / format for column 34                           TUNIT34 = 'pc      '           / units for column 34                            TTYPE35 = 'X       '           / label for column 35                            TFORM35 = 'E       '           / format for column 35                           TUNIT35 = 'pc      '           / units for column 35                            TTYPE36 = 'Y       '           / label for column 36                            TFORM36 = 'E       '           / format for column 36                           TUNIT36 = 'pc      '           / units for column 36                            TTYPE37 = 'Z       '           / label for column 37                            TFORM37 = 'E       '           / format for column 37                           TUNIT37 = 'pc      '           / units for column 37                            TTYPE38 = 'Rgc     '           / label for column 38                            TFORM38 = 'E       '           / format for column 38                           TUNIT38 = 'pc      '           / units for column 38                            TTYPE39 = 'SimbadName'         / label for column 39                            TFORM39 = '31A     '           / format for column 39                           TTYPE40 = '_RA_icrs'           / label for column 40                            TFORM40 = 'E       '           / format for column 40                           TUNIT40 = 'deg     '           / units for column 40                            TCOMM40 = 'Expression: 1.0'                                                     TTYPE41 = '_DE_icrs'           / label for column 41                            TFORM41 = 'E       '           / format for column 41                           TUNIT41 = 'deg     '           / units for column 41                            TCOMM41 = 'Expression: (ok_fit) * (Fidelity_2)'                                 TTYPE42 = 'nb_MS_members'      / label for column 42                            TFORM42 = 'J       '           / format for column 42                           TTYPE43 = 'BP_RP_0_min'        / label for column 43                            TFORM43 = 'D       '           / format for column 43                           TTYPE44 = 'BP_RP_0_max'        / label for column 44                            TFORM44 = 'D       '           / format for column 44                           TTYPE45 = 'MS_width'           / label for column 45                            TFORM45 = 'E       '           / format for column 45                           TTYPE46 = 'mass_min'           / label for column 46                            TFORM46 = 'D       '           / format for column 46                           TTYPE47 = 'mass_max'           / label for column 47                            TFORM47 = 'D       '           / format for column 47                           TTYPE48 = 'mean_mass'          / label for column 48                            TFORM48 = 'D       '           / format for column 48                           TTYPE49 = 'nsteps  '           / label for column 49                            TFORM49 = 'J       '           / format for column 49                           TTYPE50 = 'burnin  '           / label for column 50                            TFORM50 = 'J       '           / format for column 50                           TTYPE51 = 'acc_frac'           / label for column 51                            TFORM51 = 'E       '           / format for column 51                           TTYPE52 = 'fb_50   '           / label for column 52                            TFORM52 = 'E       '           / format for column 52                           TTYPE53 = 'fb_sigu '           / label for column 53                            TFORM53 = 'E       '           / format for column 53                           TTYPE54 = 'fb_sigl '           / label for column 54                            TFORM54 = 'E       '           / format for column 54                           TTYPE55 = 'DG_50   '           / label for column 55                            TFORM55 = 'E       '           / format for column 55                           TTYPE56 = 'DG_sigu '           / label for column 56                            TFORM56 = 'E       '           / format for column 56                           TTYPE57 = 'DG_sigl '           / label for column 57                            TFORM57 = 'E       '           / format for column 57                           TTYPE58 = 'sS_50   '           / label for column 58                            TFORM58 = 'E       '           / format for column 58                           TTYPE59 = 'sS_sigu '           / label for column 59                            TFORM59 = 'E       '           / format for column 59                           TTYPE60 = 'sS_sigl '           / label for column 60                            TFORM60 = 'E       '           / format for column 60                           TTYPE61 = 'sB_50   '           / label for column 61                            TFORM61 = 'E       '           / format for column 61                           TTYPE62 = 'sB_sigu '           / label for column 62                            TFORM62 = 'E       '           / format for column 62                           TTYPE63 = 'sB_sigl '           / label for column 63                            TFORM63 = 'E       '           / format for column 63                           TTYPE64 = 'KS_pvalue'          / label for column 64                            TFORM64 = 'E       '           / format for column 64                           TTYPE65 = 'fb_3sScut_50'       / label for column 65                            TFORM65 = 'E       '           / format for column 65                           TTYPE66 = 'fb_3sScut_sigu'     / label for column 66                            TFORM66 = 'E       '           / format for column 66                           TTYPE67 = 'fb_3sScut_sigl'     / label for column 67                            TFORM67 = 'E       '           / format for column 67                           TTYPE68 = 'ok_fit  '           / label for column 68                            TFORM68 = 'J       '           / format for column 68                           TTYPE69 = 'Fidelity_2'         / label for column 69                            TFORM69 = 'I       '           / format for column 69                           TTYPE70 = 'final_selection'    / label for column 70                            TFORM70 = 'J       '           / format for column 70                           TTYPE71 = 'fb_res_grt06_over_fb_unres_grt06' / label for column 71              TFORM71 = 'E       '           / format for column 71                           TUNIT71 = 'pc      '           / units for column 71                            TTYPE72 = 'fb_res_grt065_over_fb_unres_grt065' / label for column 72            TFORM72 = 'E       '           / format for column 72                           TUNIT72 = 'pc      '           / units for column 72                            TTYPE73 = 'fb_res_grt045_over_fb_unres_grt045' / label for column 73            TFORM73 = 'E       '           / format for column 73                           TUNIT73 = 'pc      '           / units for column 73                            TTYPE74 = 'fb_tot_qlim06'      / label for column 74                            TFORM74 = 'E       '           / format for column 74                           TTYPE75 = 'fb_tot_qlim06_sigu' / label for column 75                            TFORM75 = 'E       '           / format for column 75                           TTYPE76 = 'fb_tot_qlim06_sigl' / label for column 76                            TFORM76 = 'E       '           / format for column 76                           TTYPE77 = 'Separation'         / label for column 77                            TFORM77 = 'D       '           / format for column 77                           TUNIT77 = 'arcsec  '           / units for column 77                            TCOMM77 = 'Distance between matched objects along a great circle'               TUCD77  = 'pos.angDistance'                                                     DATE-HDU= '2023-01-16T13:09:21' / Date of HDU creation (UTC)                    STILVERS= '4.0     '           / Version of STIL software                       STILCLAS= 'uk.ac.starlink.votable.FitsPlusTableWriter' / STIL Author class      END                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             LISC2411CK‡Â{¬?;çm?4¼jÀ–ff>8QìÀõÃ>èõÃ>ñ©üAff>\)<o0.1     ?       Trumpler_21     CKhÂ{%ãC™Ê^¾‘hs=‘hs   _À•Òò=ï²À÷Ï=í‘h?8Ôş=8QìNN            @ö{?záA)ÂD¥À DJ@ Äƒ` ÀÀ  Eí˜ Cl Trumpler 21                 CKhÂ{%ã   M¿µ,às'ªh?ğ‰°êE,Z?ãø?ñÜÎxŞCk@:ú8(h?ù6ìÛ´  '  ˆ>ÌÌÍ> Äœ=8Qì=¾w¿?|î<#×
+<t¼=Ù‡<o;å`B>49X<uÂ<Tıô%.˜/>¾w               =ß°@=á^ =Ü >2SÚ=Lsà=12@G†$:\LISC3077BõV‡ÁMX?BJ?8bÀV>‰7L¿´9>„“?AÊÁA ÌÍ=áG®<o0.9     ?
+=q    NGC_2539        BõPåÁMXCi¸“A1²->?|î  åÀ/>J¿=ñ©ü?A%=ƒoNN            Ap¤=áG®A'33D™€ Ä2@ ÄrÀ Cl  FD NGC 2539                       BõPåÁMX  ¢?ÓÆôŞZ?÷H®Š¶Êš?’¹h?ìûíp½y?ùù“)ÅÊY?ò÷îZ¬k  '  ˆ>ÌÌÍ=İ/<ƒo<uÂ¿=/<t¼<t¼=çl‹;ƒo;ƒo> Äœ<Tıô<D›¦    =İ/;£×
+           =èè =ê0 =çÇ`=öV‘<‘ú­<ˆÚû@CNáıc‰/LISC3098CúÂSÃ–?_|î?e¸À‚ùÛ>¸@•Òò<e`B?-VA ÌÍ>B\<õÂ0.3     ?®    NGC_2669        CœjÂS¹XC‡jÀÂV=ñ©ü   ÑÀ„Z>Oß@”Äœ>hs?XQì=<jNN            A{?\A#33D‰  Ap  Äˆ@ Âè  F, NGC 2669                       CœjÂS¹X   Ã?~~uIí÷ ?óâu§‹â? ?ğ5¡>8@ RÍ„ëÏ?öE/¦  '  ˆ>¨õÃ>$İ/=,1<í‘h¿>5?<D›¦<49X>“<o<t¼>MÒò<ÌÌÍ<‹C–    >²-;£×
+<¬1       =÷õ`=ø@=úuà>8Ó=@ÜR=+@Eyô[øøLISC3103C¥ŸßB9÷Ï?P Å?Fff@33=,1>†$İ=49X?¬A   >\)<#×
+0.3     ?
+=q    NGC_7209        C¥œ¬B:1B¾õÃÀéxÕ>›¥ã  @Qì=áG®>å`=ë…?Që…=49XNN            A
+{?®A$õÃD@ ÂÚ  D€ Ã  F4 NGC 7209                       C¥œ¬B:1  U?ÆI£±$.?ôİ_xÀçš?¡X?ï|)5@?ûÖs_@ı?ô|Ëå0  '  ˆ>Â\>
+=q<ÌÌÍ<¬1¿=ó¶<uÂ<Tıô>¬<o<o>bMÓ<Ä›¦<›¥ã    =Òñª    ;D›¦       =ğí =ñß`=ñÊ >€®<ää¶<ÀEB@U$ş’áàLISC3138BÙDÁ$b?WP?U?}¿‹dZ<£×
+?HõÃ>÷KÇ>ê~úA   >k…;ƒo0.1     ?
+=q    NGC_2353        BÙH1Á$¬C`¯>ÎV=í‘h   Ì¿|î>n˜?8Qì>P?På`=ixÕNN            A (ö>\)A&áHD˜€ ÄXÀ ÄV€ A   F| NGC 2353                       BÙH1Á$¬   ‰¿“A>YKp?ô‡aóW$?¦Mx?ïË¹E5@ é_ıSp?öT‰D'1  '  ˆ>½p¤>$İ/=\)<õÂ¿?;d<t¼<t¼=Ğå`;Ä›¦;Ä›¦>)ûç<e`B<D›¦éµ&>,1               =éº =êù0=èÏ >7­ß=¸¶=çp@>PU›†6LISC3177C{‰üÂ<?UÂ?bJ¿9X=m‘h¿¸R=C–>ËC–A$(ö>õÂ<õÂ0.2     ?
+=q    NGC_6204        C{‰ºÂ<¦C©F¨¿…ãT=yÛ#   Ğ¿0£×>A‰7¿“u>:^5?N{=ƒoNN            @ÿ
+=?£×A'\)Dš` DÀ Ãá€ Á°  Eá  NGC 6204                       C{‰ºÂ<¦   \¿ƒâË~!À?ğôgVòò?‚Ğ?òâûo&E@ ¼c}&Êº?÷ÿ?-  '  ˆ>³33>}ó¶=%=Y‡¿?;d<49X<49X>¸<Tıô<#×
+>?|î<¬1<‹C–b>^5?=]/<49X       =è3`=é‚€=æã >_X=§,=q³À@5¾'[†‚(LISC3243C4¤ZÂsÓø?}ó¶?}ó¶ÀÓï>ÚŸ¾?×ï>×
+=>§l‹A£×>uÂ<£×
+0.2     ?¸    Alessi_Teutsch_8C4¦%Âs½qC”„9?° Å>˜“u  ?ÀÔ  >C–?Ğ£×>C–?wP=H´9NN            A¸>úáHA®Dw@ Cà€ Ä\@ A¸  Eø Name Alessi Teutsch 8          C4¦+Âs½q  J¿œ«áëû½H?øyml|2?Ç`è?ë¡Õxbˆ@?ÆÂ+¯>?ô¨¾ AŞ  '  ˆ>ÌÌÍ>#×
+<´9X<¬1¿>vÉ<49X<#×
+>;å`B;Ä›¦>G®<‹C–<e`B    >!ÊÁ    ;D›¦       >} >‡8>\p>8àæ<Ë]Ë<Â(>@TßÂûóiLISC3313BT'ğB3wÏ?•ãT?›Æ¨?f§ğ?‹DÀDí‘=¾vÉ?
+=qA  >³33;ƒo0.8     >ğ£×?€  ASCC_11         BT9XB3l‹C‹ÇÁ•>Ÿ¾w   õ?mV>&éyÀAë…>‡+?’J=yÛ#NN            A=q?™šA
+=DXÀ Ä:@ CÒ€ Ã  F [KPR2005] 11                   BT9XB3l‹   ã?±²¯"õ4?ø×ôÆ§?½ß(?ë0Fõvm?şR´V§ÑÑ?óuS’Ía  '  ˆ>½p¤>Y‡=C–=+¿<(ö<uÂ<D›¦>¬<49X<t¼>_;d<¼j<“t¼    >9X;ƒo;ƒo       >ğ>Àè>0>w7=—U=ûš@M^NhÄôĞLISC3318C¦âNBGKÇ?£×?¾w>Ş¸R=İ/À9‡>Oß?K…Aff>³33<o0.1     ?
+=q    NGC_7243        C¦äİBGQìBÅ£×À²Ÿ¾>‚\  #>İ²->49XÀ6Ù>%ãT?Ù=ixÕNN            A¸R?   A…D[€ Ã  DX  Âª  F NGC 7243                       C¦äİBGQì  %?‘Áı²µ`?ù¯×¶‚<?ËFx?éòˆú=‡@ €Qò?ó[GU4N  '  ˆ>Ç®=ÌÌÍ<´9X<›¥ã¿=p¤<49X<#×
+>hs;å`B;å`B>333<ƒo<uÂ    =®{<#×
+           >@>º>Ã°=é@<ÍB<± @I™Ì&šuLISC3322CtÀƒÂg´9?ƒ÷Ï?‰X¿Ğƒ<›¥ãÀÆ¨=›¥ã>²-A33>k…<£×
+0.1     ?¸    NGC_6087        Ct¸“Âg©üC£ß;À­X>{çm   ã¿È“u>OßÀMÓ>P?ƒ33=}ó¶NN            A   >Ç®AffDn€ DHÀ Ãı€ Â´  Eì NGC 6087                       Ct¸“Âg©ü  ¿£†±¼Ø?ùÏyó­¨?ÓYĞ?éÄ›T@‰ìè˜7?óæâ«œIL  '  ˆ>½p¤>6E¢<õÂ<Ôıô¿>5?<uÂ<Tıô><t¼<o>n—<Ôıô<›¥ã    >0 Å;ƒo;£×
+       >I0>7È>	¸ >N,Æ=
+şŒ<ğù@QVÿûLISC3326BÍë>ú^5?“¶F?“÷Ï¿°bN=%À
+°!<o?d“A™š=¸Qì<õÂ0.2     ?®    NGC_2301        BÍâÑ>î{CT˜>’ñª>%ãT  ’¿®ùÛ>TıôÀt¼>?|î?‘G®=‹C–NN            AG®=£×
+A¸RDV@ Ä4€ Ãæ€ @€  FÈ NGC 2301                       BÍâÑ>î{  Ü?¦@ë]?û[)á?Ó €?çòö¬aFE?ÿ/0VaY ?ò1¢‰äß  '  ˆ>ÌÌÍ=Ù‡<ƒo<e`B¿<(ö<49X<#×
+=®{;D›¦;D›¦>Z¬<“t¼<uÂ    =Û"Ñ               > >´è>1 =÷lÀ<•c‘<‚ÉM@Yõ‡ëVHôLISC3328Bè'ğÁÇ;d?gï?`A‰ÀXbN=+@<zá=Ôıô?/ß;AÌÍ=áG®<o0.2     ?ÌÍ    NGC_2448        BèhÁÆ²-CpØ“¾ÚŸ¾>ˆ´9   yÀ[¥ã=®{@<9X=çl‹?`Äœ=@ƒNN            @ÿ\)=õÂA$(öD  Ä	@ Äv@ Á   FÀ NGC 2448                       BèhÁÆ²-   r¿£'`Gx`?ô»Yğ×B?ª¤¨?ï›Zo©_ñ@„›A“a?ö×ƒú¬   '  ˆ>ÌÌÍ=²-<İ/<¼j¿@  <t¼<t¼=´9X;Ä›¦;£×
+>6E¢<uÂ<Tıô'&=¡ÊÁ               =óş =ôÏà=õ” =°{Â<÷‰<Òİ(@qŒiY¯Æ=LISC3329BöG®Â´9?ˆ´9?ŠÀƒÀn‡+<õÂ@}¡Ë>Ÿ¾? ÅA
+=>uÂ<õÂ0.1     ?¸    NGC_2546        Bö)üÂ¤İC~ëDÀ “u>j~ú   zÀpr°=Â\@w+>V?„Z=TıôNN            Aff>Ü(öA™šDi€ Ãr  Äa@ Â   FØ NGC 2546                       Bö)üÂ¤İ  /¿X¢Q€?ûû®k2š?à¸?çÄ>1ªì@ ˆêüÊ Ù?òŠ'˜+  '  ˆ>ÌÌÍ>
+=q<¬1<£×
+¿>5?<#×
+<t¼=÷ÎÙ;£×
+;£×
+>@ƒ<e`B<Tıô    >“               >ø >Öx>»P>˜†<Âßò<¹£µ@e»à÷»)ILISC3331Bş÷LÂ%gm?<j?BMÓ¿Ü(ö<ıó¶?/=° Å>ÀƒA(Qì>Ü(ö<o0.7     >ë…    LP_2220         BşæfÂ%_;Cî˜¿©Û#>E¡Ë   Y¿á‰7=Òñª?ˆõÃ=¡ÊÁ?7KÇ=¾wNN            A
+\?.{A*ffD¨  Ãm  Ä¦  Áø  Fœ                                BşæfÂ%_;   u?Ì™_l‚½H?óÄIíUŸF?ˆğ?ğDÄ‚*.P?úûÆ˜è•?ô™DgigY  '  ˆ>Â\>”ıô=8Qì=,1¿@  <#×
+<t¼=ë…<t¼<o>F§ğ<ƒo<e`BZí>‡®<t¼           =İº =ß~p=Ù`>¥f=LG-=>¬+@Wo!ª3¸¥LISC3332CXhÂuW
+?†§ğ?„záÀ× >®—À”A‰<D›¦>7KÇA\>Ü(ö<#×
+0.1     >Ç®    Lynga_2         CXÃÂuOßCœëd¾áG®>JÀƒ   “ÀÖéy=ùÛ#À–E¢>zá?„Z=H´9NN            A (ö?J=qAáHDr€ D(  Ä.À Àà  Eğ˜ Cl Lynga 2                     CXÉÂuOß   ]¿¡.qû2r ?ò]pz|†©?—7 ?ğíóÊòã–@hmõQyÉ?÷uªI  '  ˆ>Ç®=²-=o<Ä›¦¿@A‰<#×
+<#×
+=ıó¶<o;å`B>,1<uÂ<e`B.ó·Œ=…¸               >ü@>÷P>(°=²,ş=<Ş&X@CZÒ:-LISC3333C~uÃÂ36F?R°!?U?Ğƒ>'ïÀYë…<#×
+>D›¦AG®?¸R8Ñ·0.4     >ë…    NGC_6249        C~qìÂ3BCªÅÃ¿™Û#='ï   9?İp¤>JÀƒÀ[dZ=ùÛ#?Iº^=]/NN            @éë…?³33A(  D  D•€ ÃÇ€ ÁĞ  Eß˜ NGC 6249                       C~qìÂ3B   7¿Áê(ÄPP?ö¤·ı#Ôò?Çè?í©‰³‚‡@·x	l¸?÷éÎı°àE  '  ˆ>¸Qì>‹Æ¨=™™š=…¸¿>¸R<#×
+<t¼=÷ÎÙ<#×
+<t¼>/ <‹C–<e`BC®1>‹Æ¨<“t¼<Tıô       =å£€=çÀ=ã§`>›rç=ªÒÇ=”)@Lİ°`·5LISC3335C…HÂaH?k?p£×¿ú=q=aG®ÀÎÙ=ixÕ>Ót¼A £×>Â\<£×
+0.2     ?®    NGC_6416        C…ËÂ`BC²u¿¿ >vÈ´   û¿ù‡>'ïÀí‘=í‘h?l1=TıôNN            AÂ?B\A ÌÍD  D~À ÂX  ÁĞ  EäÈ NGC 6416                       C…ËÂ`B   w?¬^œ(?ñıú¿ğâ?ˆâÀ?ñ"ŠÑ.y?şËë–|—o?öpØŞ  '  ˆ>Ç®>:^5=¾w=t¼¿>¸R<#×
+<#×
+=ó¶F<o;å`B>6E¢<uÂ<Tıôs=–>0 Å<Tıô;ƒo       >)°>J>Œp>Qà)=3ä¸=&„@)\Nz*0LISC3336C…[ÁüC–?z^5?záH@r~ú=¶E¢¿Ù™š<Ôıô>Ÿ¾wA   >×
+=<£×
+0.4     ?
+=q    NGC_6425        C…]ÓÁüVC²ùš¿Éûç=éxÕ   €@sC–>Ÿ¾¿ÒĞå=ûçm?|¬=‘hsNN            A
+¸R?^¸RA33Dt  DsÀ Â  ÁĞ  Eæ  NGC 6425                       C…]ÓÁüV   ^?ÎÔ¡£Ê?öÆmbø+?—_g?í…ØHlJ?ú½Ô?[;ä?óh†`‰š  '  ˆ>Â\=ï²=¥ã<ıó¶¿@A‰<49X<49X>V<49X<t¼>8Qì<‹C–<uÂ½=Ä›¦<49X<49X       >ğ> >•°>O·=/Ê=j@\Úµ¡^–LISC3350Bä–Á]•?‡ÎÙ?‡®¿=²-=éxÕÀf>Që…?)º^A¸R>uÂ;ƒo1.4--1.9?®    NGC_2423        Bä™Á]ÎÙCf|¬@cçm>‰7L  –¿<(ö=ıó¶Àhr°>“u?…Â=På`NN            A£×>¸QìAë…DkÀ ÄÀ Ä5€ Bh  F  NGC 2423                       Bä™Á]ÎÙ   ?İìÃî´æ›?úiön5…?—o(?èÆêíÿQ?ø–s¯´ŠÀ?ğêÆ<Åxò  '  ˆ>ÌÌÍ=ó¶F<¬1<›¥ã¿=ó¶<t¼<t¼=Ä›¦;ƒo;ƒo>!ÊÁ<D›¦<49X    =ï²               >4>à>
+Ñ0>	ñù<Â¿<°;…@KLU8ƒçLISC3359C¢}‘BXD?ˆ“u?OßÀlZ=På`À_;d=ıó¶?Hr°A¸>Š=q;ƒo0.5     >õÂ    ASCC_114        C¢~¸BWüîBÂ)ü?ƒ•>]/   †ÀmÒò=áG®ÀZñª=ë…?ˆr°=PNN            @õÂ?k…A£×Dc  ÂŞ  Da@ A€  FÌ [KPR2005] 114                  C¢~¸BWüî   ~¿¬ÿ¢$B€?øyíS}V?Ëx?ë¡¡CVÃ@) >ôÓŞ?õÔ-:  '  ˆ>Ç®>q©ü=<j=49X¿?¾w<D›¦<D›¦>¥ã<uÂ<D›¦>S÷Ï<¼j<›¥ã /c>cSø<o=%       >
+Ap>
+
+P>tğ>‰%k=UÚê=L˜n@Jğ‰zm#LISC3364C5ğåÂmOß?p¤?›çmÁ4—='ï¿På`=ƒo>İ/A¸>€  <o0.1     ?®    ESO_130_06      C5øRÂm=qC”²@EãT=ß;d   GÁ4A‰>P¿]²->J?Oß=¾wNN            Aff>Š=qA£×DJ  C¹€ Ä3  B,  Eú  ESO 130-06                     C5øXÂm=q   Q¿bÂ­ø»ø?öHFrTá?³X`?î
+¯ ¹©Ø@ ´»aÆ23?õzOjoŸ  '  ˆ>ÌÌÍ>/ =0 Å=#×
+¿>ùÛ<t¼<t¼=Æ§ğ;å`B;Ä›¦>5?}<uÂ<Tıô(²]>1&é               >@@>­(>?>Htv=I ¨=;šß@TøÏAÍóLISC3378B"B*ß;@ r°@ÎÙ?(õÃ=Ù‡À¹G®=ùÛ#>Á‰7A  >#×
+<õÂ0.0     ?ÌÍ    NGC_1039        B"¾B*ãTC®˜ÁzV>ÎV  +?8Ôş>•ÀµÊÁ>¦ff?ùxÕ=×
+=NN            Aë…>#×
+A
+=qD€ ÃÏ  C˜  Ã  FÜ NGC 1039                       B"¾B*ãT  Y¿ö·Iê @…8=óo@%)t?ß+¯¸oE*@ å"C¶ú;?ì=
+º«»o  '  ˆ>ÌÌÍ=Ù‡<e`B<D›¦¿=ó¶<t¼<t¼=ß;d;ƒo;ƒo>8Qì<Tıô<D›¦    =İ/;o;o       >>Ë ><Ğ°>Jñ0> Ä£<ˆ5<j&@>Kb$LISC3381B˜gmA¾j?A‰?‹@Gï;å`BÀ`A‰<í‘h>•Aff>æff<õÂ0.5     ?ÌÍ    NGC_1758        B˜YšA¾C3(sÁ'\)=Ù‡   ‰@Iûç>À]Â>“?/=q©üNN            A
+=?n{A×
+D]@ ÄY€ A@  Ã   Fè NGC 1758                       B˜YšA¾   ¡?¹/Vîi˜?óÖDyŞø?’x?ğ;Ç<Mw?ıáˆÜ›¾?õ_&{¶Z  '  ˆ>ÌÌÍ>D›¦=t¼=+¿>ùÛ<49X<#×
+>V<t¼<o>F§ğ<‹C–<uÂûÀÍ>$İ/<D›¦           >`à>à>ùğ>_‡='«¯=½@XVI>º[aLISC3384BÊÿ}Á¥“u?®{?¯;dÀ‹•=+¿­²->záH?)7LA®=uÂ<õÂ0.2     ?¸    NGC_2287        BÊÿ}Á¥º^CfúáÁ&éy>©ûç  qÀŠÙ>6E¢¿°Äœ>KÆ¨?®{=ixÕNN            A®<£×
+A
+=D,  ÃÕ  Ä€ Âø  F	8 NGC 2287                       BÊÿ}Á¥º^  G?”e¿í¥!´@±ƒ×@B˜?åáÖÑß¹S@ Öÿ’m?ñ^Y„€  '  ˆ>ÌÌÍ=×
+=<e`B<Tıô¿<(ö<#×
+<t¼=¸Qì;D›¦;D›¦>H´9<e`B<Tıô    =İ/;o           >#tÈ>"\h>+á`=ù]¤<„ÿ<web@QdÿÿÑLISC3389C ‹…Bó¶?¾vÉ?¾{?ÀÄœ=…¸À õÃ<Tıô>—
+=@ÿ
+==õÂ:ƒo0.5     >Š=q    NGC_7063        C B+B¦/Á5?=õÂ   @?Ão>$İÀÙ=ûçm?½V=#×
+NN            @ÿ®>k…A™šD%@ Bœ  D!€ Ââ  Fx NGC 7063                       C B+   v¿£õ°#´?şêŠu–E;?üQÀ?ç..ï™@—êTå?ò¶ßßŒ  '  ˆ>ÌÌÍ=õÂ=o<å`B¿>vÉ<t¼<t¼=Ä›¦;Ä›¦;Ä›¦>2-<uÂ<TıôŠ Š=ó¶F               >'€H>&Ep>0… >úê=ƒg=„³@\ÊQNÆfåLISC3390CªõãB9e`?´İ/?³¶F>²°!?$“¿ÓSø=“t¼?Sø@ù™š>k…9IR0.3     >®{    Alessi_37       CªûB9^5BËvÉÁ6{>Ø“u   …>³¶F>
+=q¿ÈÔş>“?±&é=‡+NN            A=q>ğ£×A\)D-À Ã
+  D&À Ã	  Fà Cl Alessi 37                   CªûB9^5   ÷¿pQ‰€L @ º=ûÌÚ@È?æ¬'`Û–M@ ˜yÇflè?ñûé!Æì½  '  ˆ>ÌÌÍ=Àƒ<´9X<›¥ã¿?¾w<Tıô<Tıô>1&é<#×
+<t¼>;dZ<£×
+<‹C–    =¶E¢<D›¦<o       >"s8>!c`>*¸ğ=ßx<ĞÑ<´rš@Y¤q5íL[LISC3391C­6éBE‰7?æÈ´?ä›¦@(´9=@ƒ¿úÀƒ><j?$›¦A£×>Š=q;ƒo0.0     ?       UPK_185         C­6FBEBÓ/Áıô>bMÓ   m@(´9>!ÊÁ¿öéy>8Qì?ä›¦=]/NN            @û33>æffA£×D@ Ã  DÀ ÂÄ  Fü                                C­6FBE   V?º°÷hT„*@ ³¹½0?ıÙ0?æ®ïünÏÄ?ıZ8ÜôœH?ñ1!‹[X  '  ˆ>ÌÌÍ=Àƒ=P<õÂ¿?;d<t¼<t¼=Ğå`;å`B;å`B>+<uÂ<Tıô{H=¾vÉ               >6ÆH>5 >AæP=âß¥=2š“=ß”@?€]†³îLISC3393BÕåãÁËQì?Ä›¦?Á‰7¿õ<¼j@†Àƒ<D›¦?-A
+{>¸<o0.4     ?\    Gulliver_21     BÕìÁË²-Cm„İÀşáH>º^5   y¿öéy=ñ©ü@†\>bN?Àƒ=LÌÍNN            A
+=>¸A{D'€ Ã²  Ä  Â¸  F( Cl Gulliver 21                 BÕìÁË²-   ?¸§Ë¡Ò@ .j´AGx?öİW?æä1Œ˜t?ıœ•1ÀØ?ñX×yXz  '  ˆ>ÌÌÍ=ÌÌÍ<ÌÌÍ<´9X¿@A‰<t¼<t¼=ÊÀƒ;£×
+;£×
+>8Qì<e`B<Tıô-nŠ=Ä›¦               >&>$ğ`>.ñ`=îP<îÌ<Ñ”›@e´\{`LISC3394C\åÂ„F%?A‰?‘hsÁ)&é>À  À°‹D?+?f$İAff>™™š;ƒo1.1     ?¸    Alessi_6        C\ÙÂ„ACœÒNÀ±hs>–‡+   ¤Á'P>™šÀ±ãT>&éy?ŒÌÍ=ixÕNN            A
+{?333A×
+D]€ D  Ä€ Âª  Eòh Cl Alessi 6                    C\àÂ„A   l?Æ‘Ï’:’?õ;|ï§?“J?ïL–ÎHZ?ûËÖTÏ´b?ôUã¶kâ  '  ˆ>½p¤>r°!=LÌÍ=8Qì¿?|î<49X<#×
+=ó¶F<t¼<t¼>S÷Ï<›¥ã<ƒo iÚÛ>vÈ´               >HÀ>ş >İP>‰÷º=hÛd=Q¼@BìX; ÖLISC3395CpÈsÂqÉº?¤ıô?¦E¢À<j;Ä›¦ÀCo=ÌÌÍ?'®A(ö>\)<o0.1     >ë…    NGC_6025        CpÇmÂq¸RC¢DœÀ»ÎÙ>•  À9©ü>333ÀB=q>-V?¢n˜=e`BNN            A Qì>Ü(öA{D;€ D  ÃØ€ Â˜  Eñø NGC 6025                       CpÇmÂq¸R   ı¿¡ƒÕtÜ?ø®~‡"Ø›?ÉÔ¸?ëaeµ}¶
+@m&Ö;·?ôŸ?¸*p  '  ˆ>ÌÌÍ=çl‹<¬1<£×
+¿?;d<t¼<t¼=ñ©ü;£×
+;£×
+>2-<e`B<Tıô    =Òñª               >à>G >"7P><²<ÆŸ<¼Ã¨@NÍ]M^L1LISC3407@¢ĞåB^Û#?h1'?nV?$Z>	7LÀ(õÃ=Òñª>ãSøAp¤>¸Qì<o0.0     >\)    UBC_183         @ (öB^Û#BìûdÀÜ1'=ÊÀƒ   ?)7L=‡+À r°=‹C–?o <›¥ãNN            @ú=q>½p¤A!™šD‚À Ã÷€ Dd  Âú  F
+È                                @ (öB^Û#   -?§KO3ÄÓ„?ô/ÁsÓ6t?›«8?ğ¾ëb¸?ÿx’áª?õ¶ü†så  '  ˆ>½p¤>'ï=‹C–=ixÕ¿?|î<t¼<t¼=í‘h<#×
+<t¼>,1<ƒo<e`B'EÇ>LÌÍ               =ş`=ÿ>L><Ğ’=œ“ş=ƒ@;@e
+BÏÀŸLISC3409BÚ¢ÑÁ‰\)?Š~ú?Œ1¿¯\)>‡+?‹D>'ï>È1'A(ö=ÌÌÍ<õÂ0.5     ?ÌÍ    NGC_2358        BÚ…¢Á‰$İCgÀ7L>W
+=   S¿¬í‘=®{?
+Àƒ=º^5?‡ÎÙ=Y‡NN            A¸<£×
+A£×Dc  Ä€ Ä0@ Â  F¨ NGC 2358                       BÚ…¢Á‰$İ   K?ÓE÷úgÀr?öJOú$Àp?‹Æ?î“}ã ?úk$Íã/?óaãúõ¥  '  ˆ>Â\>bMÓ=På`=<j¿?;d<#×
+<t¼=º^5<o<o>,1<uÂ<Tıôô>Z¬<Tıô<Tıô       >
+Ap>
+
+P>tğ>€mã=m¨=Uã$@kZÒÍú,LISC3413C ÒoÂ1¹X?¹º^?·®ÁáH>/ @­¸> Äœ?p¤A
+áH>#×
+;ƒo0.1     >Ü(ö    Pismis_4        C Ê=Â1 ÅCƒu?À—>”ıô   bÁÆ¨>)ûç@ªÈ´>zá?´ıô=#×
+NN            AG®>8QìA\)D-À Âª  Ä,@ Áà  F Cl Pismis 4                    C Ê=Â1 Å   z¿•¶ÁÉW0?ûê8ïÑ‹ó?â ?çÇ¼|ÌA@ièe?ò¹B€zˆ•  '  ˆ>ÌÌÍ>o=P=o¿>5?<t¼<t¼=ß;d<o<o>2-<ƒo<e`BqÙI=ûçm    <o       >"s8>!c`>*¸ğ>İ™=/˜p=ì·@]Õ3ä‡@LISC3416CJ=ÂtöÉ?5??—PÁ&Ğå=ÌÌÍ@rÀƒ<ƒo>;dZA
+==¸Qì;ƒo0.5     >B\    Ruprecht_161    CffÂu	7CYXÀˆ(ö>Á%   LÁ&A‰=ùÛ#@o|î>H´9?‹=t¼NN            A Qì>¨õÃAzáDaÀ Cd  ÄYÀ Â†  Eşğ Cl Ruprecht 161                CfmÂu	7   @¿‘«!ŸˆSø?÷ÿo”u?¾E`?ì¿Ex§‡b@ ñ/wRO?õ)ãëˆ¥  '  ˆ>Ç®>zá=På`='ï¿?;d<t¼<t¼=ÌÌÍ<o;å`B>6E¢<e`B<Tıô#CK>bN;Ä›¦           >
+µp>
+z>şĞ>(—¿=m1P=>³P@i&	Y‚LISC3418CtİqÂ[Å¢?º=q?¾{¿ü(ö>¹Û#Á)©ü>V>k…A{>8Qì;ƒo0.6     >áG®    Harvard_10      CtÛçÂ[ÓøC¤ñHÀW\)>µ?}   ™¿õ¡Ë>@ƒÁ);d>+?µ=q©üNN            AÌÍ>æffAzáD3  D€ Ã³  Â(  Eñˆ Cl Harvard 10                  CtÛçÂ[Óø  ?­0NÅ†?|@  µ…ò?ø½Ø?æöTÊ¤¨D?ş¹C™à	~?ñŸ`Têõ  '  ˆ>ÌÌÍ>	7L<´9X<£×
+¿?;d<#×
+<t¼>   ;Ä›¦;£×
+>>vÉ<uÂ<D›¦    >$İ    ;ƒo       >‡H>°>'ZĞ>—Ã<ĞM·<½Œá@Iôt¢kiLISC3426B¯	7A×Ÿ¾?ˆ1'?‡
+=¾«=0 Å¿yX>t¼>Ã•A(ö>Â\8Ñ·0.3     ?®    COIN-Gaia_23    B®åãAØbC6 ƒ¾V>ŒÌÍ   [¾¢Ğå>¾w¿m‘h>+?„“=²-NN            AÂ?
+=qAÂDj@ Äj@ Â  À@  Fô                                B®åãAØb   2¿C…<Ğ?ğÃ*üU­r?ˆ?ñ¾O‘–n@ â£#x7?÷ĞäBœæ·  '  ˆ>¨õÃ>¢Ğå=¬1=²-¿>vÉ<#×
+<t¼=å`B<Tıô<t¼>5?}<e`B<e`BŞT>£×
+=#×
+           >¶P>—@>là>¸dì=ÂÔè=ÉÍÂ@rñûòGLISC3433CQhÂU­?©X?¥ãTÁ$İ>¸@¬“u=}ó¶?XQìA
+=>#×
+<o0.1     ?
+=q    NGC_2925        CR-ÂU¦éC‰ú^¿ ƒ>bN   TÁ‡+>/ @ªÀƒ>zá?¥Â=<jNN            AÂ>LÌÍAp¤D8€ B˜  Ä7€ Á€  Fœ NGC 2925                       CR4ÂU¦é   š?nøÓó@?ûïæŞ”¶?ß¸?çÆ™xÊ€@ hmûœŞ,?òuG@0ùO  '  ˆ>ÌÌÍ>   <õÂ<Ôıô¿>¸R<t¼<t¼=È´9;Ä›¦;Ä›¦>,1<e`B<Tıôàä>¸    <Tıô       >ø>À°>#üĞ>“¿=¬¹<õ­Ï@6‹M5­¢	LISC3455Bò“uÁàí‘?ÈõÃ?ÅÂÀ±©ü>“÷Ï@êŸ¾=Oß? ÄœA£×>™š<o0.9     >Ñë…    NGC_2527        Bò}ôÁàùÛCvª?ï²>Ğå`  TÀ±‘h>j~ú@èÌÍ>Y‡?Ä›¦=\)NN            Ap¤>¸QìAÂD&  Ã†€ ÄÀ A¨  FØ NGC 2527                       Bò}ôÁàùÛ  ?Ô-£è…!±@ óô	îm«?æãù?æ”ÿu­¼`?ùë"ìŠ×¼?ğXHFãÕ—  '  ˆ>ÌÌÍ=Û"Ñ<›¥ã<‹C–¿>vÉ<t¼<t¼=Ù‡;£×
+;ƒo>%ãT<Tıô<D›¦    =Ù‡;ƒo           >'	Ø>%Òà>/ığ=şáÚ<µ
+t<¢)–@`âïÜ[ÁLISC3467C‘e`A±7L?×ï?Ù™š@ráH=¼j@b-=49X?.ÙA=q>Ü(ö<o0.2     >®{    NGC_6793        C‘h“A±E¢B`¾w@TZ>hr°   ¹@ráH>>vÉ@bĞå>5?}?Õ¡Ë=aG®NN            A×
+?=p¤A×
+D  C®€ D@ B  Eú8 NGC 6793                       C‘h“A±E¢   Í?À•7Š/ï2@ {sË©·?÷#°?æÅ("
+Â?ü»K(Ç1G?ñwİ¹K  '  ˆ>Ç®>7KÇ<ıó¶<Ôıô¿?|î<#×
+<t¼=ó¶F;Ä›¦;Ä›¦>A‰7<e`B<Tıô    >8Qì               >,Ó@>+k¨>6šà>V;R=hä<ùUQ@UÃêç"ïLISC3470C—ròBãT?•ãT?˜Qì¿–E¢=™™š¿Èb=Ôıô>ıó¶A£×>£×
+<£×
+0.1     >áG®    ASCC_111        C—rB\B•m‘@•?	xÕ   ˆ¿“33>Ÿ¾¿Ão>²-?•?}=q©üNN            A
+=>Ç®AffDTÀ C`  DM  Ağ  Eşè [KPR2005] 111                  C—rB\   S?¶|÷›lnĞ?ú<toOø?Æ¥(?éIésM¹?ıÉ×¬Ì0Ò?òdH—Û½  '  ˆ>½p¤>xÔş=Y‡=@ƒ¿>vÉ<#×
+<#×
+=ùÛ#<t¼<t¼>-V<uÂ<Tıô  ×>‡®    <Ä›¦       >³>IĞ>ç>à/=w“=[–	@c‚ãwÕ'LISC3471CœÓ×B= Å?ão?áhs@³÷Ï=éxÕA33?V?³t¼A®>Â\<#×
+0.9     ?ÌÍ    NGC_6991        CœÏ}B=™šB®³3?Éûç?{   ó@²ùÛ>™‡A$İ>dZ?áë…=Y‡NN            A
+=>LÌÍAõÃD@ AĞ  D  Ap  F4 NGC 6991                       CœÏ}B=™š   µ?ã½İøó¹I@šåıvŠV?Ú¶è?ä!€Z½Ø‘?õ+•Ş_?ì%`,hrŒ  '  ˆ>³33>­V=…¸=…¸¿<¬<‹C–<D›¦>$İ<‹C–<uÂ>p£×<í‘h<´9X    >¡G®<49X<õÂ       >6 >4LÀ>A >ËĞf=œÈÅ=œõ@U¥amØ¨LISC3475C¦=PBf.?‹…?V?ãt¼=ûçm?Ä¼j=e`B>ûçmA®?ë…<£×
+0.2     >úáH    UBC_168         C¦7
+Bf2-BÍ Å?š~ú>¬   ?åãT=° Å?Ñ%=yÛ#?ˆÔş<TıôNN            @û…?£×Ap¤Dh  ÃI  Db€ A˜  F4                                C¦7
+Bf2-   S¿£]r„ØéÀ?õÕ×gkë¨?³†?î€’4Fs@‡Ÿ³ÛV&?ö	a 8  '  ˆ>”zá>~ùÛ>%=‡+¿>¸R<t¼<t¼>o<49X<t¼>)ûç<uÂ<e`BŠÉõ>Që…               >|p>V>Yp>{>8¤=™2=@Wñ6§c5LISC3491B?ÒòB|ñª?¼¬?¾ùÛÀXr°<“t¼¾8Qì>’ñª?f§ğA(ö>™™š<#×
+0.4     ?       Trumpler_3      B@B|ß;C
+–@‘G®>Oß   ÓÀV§ğ>,1½å`B>%?»=e`BNN            @õp¤?0£×A\)D-@ Ä € Cç  BX  F
+ˆ Cl Trumpler 3                  B@B|ß;   Ê¿¯wñƒøp@ Á¶x×‚@	úü?æ©-ıv^×@VÁİ/?ò w×ÈŠ  '  ˆ>ÌÌÍ>C–<Ôıô<¼j¿>vÉ<#×
+<#×
+>¸;å`B;Ä›¦>1&é<e`B<Tıô    >“               >"¼X>!ª>+0>!ee<öØ<Ú‹÷@YRE—çÂLISC3497C“oB5?@ Ôş@Ÿ¾¿*~ú<å`BÀ
+==ë…?t¼@ÿ
+=>™š<o0.1     ?       Teutsch_35      C“¦B÷ÏB‹!H@æùÛ>Ó÷Ï   ¿.Ù>@ƒÀ“>C•@ r°=ixÕNN            A (ö    A£×Cş€ C0  Cì€ B€  Eÿˆ Teutsch 35                     C“¦B÷Ï   ¦¿Qÿôcáô@³“ûÊç@—0?á…z'äJ—@ âÖ½l ?î»–ZÍ  '  ˆ>Â\=¥ãT<Ä›¦<£×
+¿?|î<t¼<t¼=í‘h;Ä›¦;Ä›¦>(õÃ<e`B<Tıô    =¬1               >Dn(>BFÈ>QE=Åµ¯<êS¨<Ãr.@pœÇê¦jLISC3502CSÏßÂ@ıô?¯ß;?®vÉÀÕ`B;Ä›¦ÀYX<D›¦>É7LA=q>k…<o0.1     >ğ£×    NGC_5460        CSØÕÂA#×CàƒAJùÛ>„“   ”ÀÓ+>.{À]V>C•?«…=m‘hNN            A33>™™šAÌÍD5@ Cı  Ãö€ C  Eõ@ NGC 5460                       CSØÕÂA#×   ˆ?€7ü‡à®À?ûñ‚ó“U§?Şˆ˜?çÆFâ‰=ƒ@ P†ÊÔ&?òk}Á²  '  ˆ>ÌÌÍ=Ğå`<í‘h<Ä›¦¿@A‰<t¼<t¼=Òñª;Ä›¦;£×
+>-V<e`B<D›¦ú 6=Òñª               >QØ>e°>%õ@=ñ1w=	&L<ãH@c­}é¼CLISC3504Bö½ôÀ¶Ù?¥¡Ë?¨r°¿¤9X>ÍÒò?„Z=ixÕ?]²-A®=£×
+<£×
+0.4     ?¸    NGC_2548        BöÒòÀ·;dCc×Av=q>¼í‘  Æ¿¨b>F§ğ?ƒ¶F>6E¢?¤ıô=…¸NN            A	p¤>™šA
+=DA  Ãú  Ä
+  CM  F
+d NGC 2548                       BöÒòÀ·;d  ô?Ä	Ëì‹R@ ¤v;ÒS?ö=˜?æ´Ëa¹ƒ?ü-ˆ¶íå?ğğ<'Êî  '  ˆ>ÌÌÍ=Æ§ğ<uÂ<e`B¿=p¤<#×
+<t¼=ñ©ü;ƒo;ƒo>A‰7<e`B<Tıô    =ÌÌÍ               >dˆ>¬x>ğ=ä8^<+<ƒÛ²@c"Î²~ü¥LISC3506B¨ñ'Bdqª@Oß@ ÅÀOKÇ>¸RÀï=49X?uA{>ë…<#×
+0.5     >Ñë…    UBC_8           B©	ºBd~úCèsAU¡Ë>Ú¬   gÀI‰7>n˜ÀKÇ>¬@Sø='ïNN            A33?J=qA×
+Cø€ ÃÛ  CM  Bä  F	4                                B©	ºBd~ú   ³?ÏZóÛgn@XT2Ò¯ˆ@(?âbx©c@?ú¯.iìÁæ?íL¥(>Ú  '  ˆ>Ç®>záH='ï=P¿>ùÛ<ƒo<e`B>%ãT<Tıô<D›¦>^5?<İ/<£×
+    >1&é;Ä›¦;Ä›¦       >GJX>E`>Tx¸>•Úc=H¡´=5Ù@Z5ƒ¡Ø+LISC3507B¾şB;%?Ï²?Ë¥ã?‰ûç?ÌÍ¿#Sø?*~ú?4¼jA¸R>B\;ƒo0.6     >áG®    ASCC_23         B¾B:×
+C'xÕAf§ğ>£Sø   x?Œ‹D>7KÇ¿‡>:^5?Ì1=yÛ#NN            Aë…>®{A  D€ ÄÀ C  C  F  [KPR2005] 23                   B¾B:×
+   i?°“Oˆ	+Š@ G1†³iå?ü)q?æÚ’$I?şuèDì»í?ñƒa.%T  '  ˆ>½p¤>¬=t¼=+¿>vÉ<t¼<t¼=¾vÉ;Ä›¦;Ä›¦>)ûç<e`B<Tıô 	c>%ãT               >,}h>+>68ğ>7=,Kñ=‡@dÈyËšl LISC3529C‚jÂzÑì@í‘@J¾ë…<oÁC–<#×
+?­²-Ap¤>W
+=<o0.0     ?¸    Alessi_24       C‚aËÂzÅ¢C¤}ôÁi&é>î—   œ¾ùÛ#>aG®Áûç>>vÉ@Æ¨=‰7LNN            @û…>®{A  Cû  CĞ  Ãz  Âü  E÷¸ Cl Alessi 24                   C‚aËÂzÅ¢   °?}†ú+Ê@@É+vÎğT@Ó@?áKæ5.Ü¥@ T%>$ëd?í÷=î?B  '  ˆ>Â\=‹C–<´9X<“t¼¿>ùÛ<#×
+<#×
+>o;å`B;Ä›¦>'ï<uÂ<Tıô   =—P    ;Ä›¦       >F>Cáˆ>S°=¦4'<×*<°@\ì×¿ØF#LISC3538BİÄœÁÿ1'@&E¢@( ÅÁ ıô<å`B@—¥ã>D›¦?ë…@îff<£×
+<£×
+0.0     >™™š    Collinder_140   BİÃ–Áÿº^CtñhÀú-?hs   |Á/>Òò@™?}>„“@&=×
+=NN            @íÂ    @şffCÂ  Ã"  Ã®  ÂP  Fø Cl Collinder 140               BİÃ–Áÿº^   s¿À»p@Ù@ë‘~B%>@?ºD?Õy÷müP@JVô‘È?çLä´9e  '  ˆ>Ç®>!ÊÁ=,1=¥ã¿>¸R<#×
+<49X>	7L<D›¦<#×
+>A‰7<“t¼<ƒo“ >(õÃ<t¼           >g à>cî>wÊà>FOp=Rß=?ê@n(Ï>YŒLISC3561C•%`AÓ%?ë?å¡Ë@j?ZÀ	‰7=° Å?‡A(ö>Š=q<#×
+0.0     >ÌÌÍ    UPK_82          C•${AÓ1B|å`¿ãT>Ù™š   S@éy>Oß;ÀÔş=çl‹?ëÆ¨=TıôNN            @ı¸>Â\A…D
+€ Cy  C÷€ À   EıH                                C•${AÓ1   5?ÊìŸ¹³ñ"?ş¶?¿"¢?ÚÅX?ç8‡¬„?û*PÆÙvS?ğîĞ‹"Ñ  '  ˆ>½p¤=å`B=aG®=8Qì¿?;d<t¼<t¼=Û"Ñ<t¼<o>-V<uÂ<e`B&œ|¨>.{               >:’>8¹ >F/Ğ>•{=…)Õ=Y÷ @6Óy ¼LISC3565Cn—LÂ>ò°?âMÓ?ß¾wÀÔQì=í‘hÀ„zá>$İ/?P£×AQì>®{<õÂ0.4     ?®    UBC_5           CnŒJÂ>õÃC¥æF@”  >Ã•   ÀÖ=q=å`BÀ‡33=¸Qì?äzá<TıôNN            AÌÍ>…¸A\)D	À Cò  Ã€ B0  Eõ˜                                CnŒJÂ>õÃ   {?¢¿AëP@ Ã)uJ@Öô?æ¨ƒ±"©8?ÿ~LäÂe?ñ¢Ïä!ô¹  '  ˆ>Â\>¨õÃ=H´9=D›¦¿>¸R<D›¦<49X>“u<uÂ<D›¦>V<´9X<“t¼    >yÛ#=…¸<o       >;0X>9Rè>Fâ0>ÇØ=mgà=ia@Z*p“6LISC3566C‹Ö‡@­Oß@Ù?ÿß;?£t¼='ïÀ=¾w?ó¶A  >8Qì<£×
+1.0     ?
+=q?€  IC_4756         C‹Ó@­ë…BIº@ªff?´9  Ò?¡G®>‚JÀ©ü>†§ğ@ó¶=™™šNN            AÂ>”záAzáCı  CË  C•€ B<  Eø IC 4756                        C‹Ó@­ë…  }?á2öÂŞÚ@(7²Ñá}?ŞB¯?åÏ/ºº´?÷HO–ã?î6|šÙ­  '  ˆ>Â\>(õÃ<í‘h<Ä›¦¿;çm<ƒo<Tıô>#×
+<t¼<t¼>S÷Ï<ÌÌÍ<“t¼    =ûçm;D›¦<o       >E"°>BõÈ>RP>I|Ä=¨´<ëğ@]¡nxáÀâ                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 

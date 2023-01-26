@@ -3,7 +3,7 @@ import os
 from astropy.table import Table, vstack
 
 from scipy import interpolate
-from scipy.stats import gaussian_kde, norm
+from scipy.stats import gaussian_kde, norm, kstest
 import scipy.optimize as op
 import time
 import emcee
@@ -141,15 +141,122 @@ def maxlike(theta0, x, y, yerr):
     theta0[:-4] = result["x"]
     return theta0
 
+def cmd_plot(clusname, x, y, xerr, yerr, samples, results, savefilename, color_background=False):
+    # CMD plot
+    plt.figure(figsize=(8,8))
+    plt.errorbar(x,y,xerr=xerr, yerr=yerr, ls='none', label=None, c="grey", zorder=0)
+    plt.scatter(x,y, label=None, c="w", edgecolor="k")
+    xarr = np.linspace(np.min(x),np.max(x),100)
+    fb_simple=[]
+    # Plot some MCMC samples onto the data.
+    for p0,p1,p2,p3,p4,p5,p6,fb,DG,sM,sB in samples[-30:]:
+        ms = np.poly1d([p6,p5,p4,p3,p2,p1,p0])
+        plt.plot(xarr, ms(xarr), color="b", alpha=0.2)
+        bs = np.poly1d([p6,p5,p4,p3,p2,p1,p0+DG])
+        plt.plot(xarr, bs(xarr), color="orange", alpha=0.2)
+        binaries = (y < ms(x) - 3 * sM)
+        fb_simple.append(np.sum(binaries)/len(x))
+        plt.scatter(x[binaries],y[binaries], label=None, c="darkorange", s=30, lw=0.3, alpha=.04, edgecolor="k")
+    plt.plot(xarr, ms(xarr), c='blue', label="MCMC main sequence samples", alpha=0.2)
+    plt.plot(xarr, bs(xarr), c='orange', label="MCMC binary sequence samples", alpha=0.2)
+    plt.xlabel(r"$BP-RP$", fontsize=22)
+    plt.ylabel(r"$G$", fontsize=22)
+    plt.legend(loc="upper right", fontsize=19)
+    # Annotate name of the cluster and binary fraction
+    ax = plt.gca()
+    plt.text(0.1, 0.2, clusname.replace("_", " "), horizontalalignment='left',
+             verticalalignment='center', transform=ax.transAxes, fontsize=22)
+    plt.text(0.1, 0.1, r"$f_b={{{0:.2f}}}^{{+{1:.2f}}}_{{-{2:.2f}}}$".format(results["fb_50"][0],
+                                                                             results["fb_sigu"][0],
+                                                                             results["fb_sigl"][0]), 
+             horizontalalignment='left', verticalalignment='center', transform=ax.transAxes, fontsize=22)
+    ax.invert_yaxis()
+    # If fit quality is bad, mark background 
+    if color_background:
+        ax.set_facecolor("mistyrose")
+    plt.tight_layout()
+    plt.savefig(savefilename)
+    # Return the simplistic binary fraction statistics
+    return [np.round(np.median(fb_simple),3), 
+            np.round(np.percentile(fb_simple, 84)-np.median(fb_simple),3), 
+            np.round(np.median(fb_simple)-np.percentile(fb_simple, 16),3)]
+    
+def cmd_residuals_plot(clusname, x, y, samples, results, savefilename, color_background=False):
+    plt.figure(figsize=(4,8))
+    ax = plt.subplot(111)
+    # first of all, the base transformation of the data points is needed
+    base = plt.gca().transData
+    rot = transforms.Affine2D().rotate_deg(-90)
+
+    edges = [-1.3,.5]
+
+    kdearr = np.linspace(edges[0], edges[1],1000)
+    kderes = np.zeros(1000)
+
+    for p0,p1,p2,p3,p4,p5,p6,fb,DG,sM,sB in samples[-30:]:
+        ms = np.poly1d([p6,p5,p4,p3,p2,p1,p0])
+        # Compute Delta G_i
+        DGi  = (y - ms(x))[(y - ms(x)<edges[1]) & (y - ms(x)>edges[0])]
+        vals, bins, patches = plt.hist(-DGi, density=True, histtype="step", bins="fd", lw=2.5,
+                                       label="Gaia DR2 open clusters ($d < 1.5$ kpc)", alpha=.2, 
+                                       color="grey", transform= rot + base)
+        kde = gaussian_kde(y - ms(x), bw_method=.1)
+        kderes = kderes + kde.evaluate(kdearr)
+    plt.plot(-kdearr, kderes/30, c="k", lw=3, alpha=1, transform= rot + base)
+
+    # Overplot the 2 Gaussians #fb_m,DG_m,sS_m,sB_m
+    plt.plot(-kdearr, (1-results["fb_50"][0]) * norm.pdf(kdearr, loc=0., scale=results["sS_50"][0]), 
+             c="b", lw=3, alpha=1, transform= rot + base)
+    plt.plot(-kdearr,   results["fb_50"][0]   * norm.pdf(kdearr, loc=results["DG_50"][0], scale=results["sB_50"][0]), 
+             c="orange", lw=3, alpha=1, transform= rot + base)
+
+    ax.axhline(   0.,               c="b", ls="dashed")
+    ax.axhline(results["DG_50"][0], c="orange", ls="dashed")
+    
+    # Compute 1-sided KS test
+    cdf = (1-results["fb_50"][0]) * norm.cdf(kdearr, loc=0., scale=results["sS_50"][0]) + \
+            results["fb_50"][0]   * norm.cdf(kdearr, loc=results["DG_50"][0], scale=results["sB_50"][0])
+    ks_stat, pvalue = kstest(kde.resample(len(x)).flatten(), cdf)
+    
+    # Beautify the plot
+    ax2 = ax.twinx() 
+    ax2.set_ylabel(r"$G-P(BP-RP)$  [mag]") 
+    ax.set_xlabel(r"Density") 
+    ax2.set_xlim(0, np.max([1.2*np.max(kderes/30), 5.])) 
+    ax2.set_yticks([]) 
+    ax.set_ylim(edges[1], edges[0]) 
+
+    if color_background:
+        ax.set_facecolor("mistyrose")
+
+    plt.text(0.25, 0.12, 
+             r"$\sigma_{{\rm MS}}={{{0:.2f}}}^{{+{1:.2f}}}_{{-{2:.2f}}}$".format(results["sS_50"][0],
+                                                                                 results["sS_sigu"][0],
+                                                                                 results["sS_sigl"][0]), 
+             horizontalalignment='left', verticalalignment='center', transform=ax.transAxes, fontsize=20)
+    plt.text(0.25, 0.5, 
+             r"$\Delta G={{{0:.2f}}}^{{+{1:.2f}}}_{{-{2:.2f}}}$".format(results["DG_50"][0],
+                                                                        results["DG_sigu"][0],
+                                                                        results["DG_sigl"][0]), 
+             horizontalalignment='left', verticalalignment='center', transform=ax.transAxes, fontsize=20)
+    plt.text(0.25, 0.75, 
+             r"$\sigma_{{\rm BS}}={{{0:.2f}}}^{{+{1:.2f}}}_{{-{2:.2f}}}$".format(results["sB_50"][0],
+                                                                                 results["sB_sigu"][0],
+                                                                                 results["sB_sigl"][0]), 
+             horizontalalignment='left', verticalalignment='center', transform=ax.transAxes, fontsize=20)
+    plt.savefig(savefilename)
+    return pvalue
+
 def run_mcmc(x, y, xerr, yerr, theta0, nwalkers=32, nsteps=10000, burnin=5000,
-             plotdir="../im/mcmc/", clusname="test", save_results=False, plot_max_likelihood=False):
+             plotdir="../im/mcmc/", clusname="test", save_results=False, plot_max_likelihood=False,
+             OC_selection_conditions=[10., 10., 10., 10.]):
     # Set up the sampler.
     ndim = len(theta0)
     pos = [theta0 + 1e-4*np.random.randn(ndim) for i in range(nwalkers)]
 
     print("Running MCMC...")
     with Pool() as pool:
-        sampler = emcee.EnsembleSampler(nwalkers, ndim, lnprob3, args=(x, y, xerr, yerr), pool=pool)
+        sampler = emcee.EnsembleSampler(nwalkers, ndim, lnprob2, args=(x, y, xerr, yerr), pool=pool)
         start = time.time()
         sampler.run_mcmc(pos, nsteps, progress=True)
         end = time.time()
@@ -162,17 +269,37 @@ def run_mcmc(x, y, xerr, yerr, theta0, nwalkers=32, nsteps=10000, burnin=5000,
     if acc_frac > 0.05:
         # Get the marginalised fit parameters
         samples = sampler.chain[:, burnin:, :].reshape((-1, ndim))
-        p0_m,p1_m,p2_m,p3_m,p4_m,p5_m,p6_m,fb_m,DG_m,sM_m,sB_m = map(lambda v: (np.round(v[1],3), 
+        p0_m,p1_m,p2_m,p3_m,p4_m,p5_m,p6_m,fb_m,DG_m,sS_m,sB_m = map(lambda v: (np.round(v[1],3), 
                                                                         np.round(v[2]-v[1],3), 
                                                                         np.round(v[1]-v[0],3)), 
                                                              zip(*np.percentile(samples, [16, 50, 84], axis=0)))
+        # Check if the fits are "ok"
+        ok_fit = ( abs(DG_m[0]+0.75) <= OC_selection_conditions[0] and 
+                   sB_m[0]           <= OC_selection_conditions[1] and 
+                   sS_m[0]           <= OC_selection_conditions[2] and 
+                   fb_m[1] + fb_m[2] <= OC_selection_conditions[3] )
         # Save the last 100 samples
-        np.savez(plotdir + "samples_mcmc_" + clusname + ".npz", samples = samples[:100])
+        np.savez(plotdir + "samples_mcmc_" + clusname + ".npz", samples = samples[-100:])
+        
+        # Turn results into a one-row astropy table
+        t = Table(names=('clus', 'nb_MS_members', 'MS_width', 'nsteps', 'burnin', 'acc_frac', 
+                         'fb_50', 'fb_sigu', 'fb_sigl', 'DG_50', 'DG_sigu', 'DG_sigl', 
+                         'sS_50', 'sS_sigu', 'sS_sigl', 'sB_50', 'sB_sigu', 'sB_sigl', 
+                         'KS_pvalue', 'fb_3sScut_50', 'fb_3sScut_sigu', 'fb_3sScut_sigl', 'ok_fit'), 
+                  dtype=('S20', 'i4', 'f4', 'i4', 'i4', 'f4', 
+                         'f4', 'f4', 'f4', 'f4', 'f4', 'f4', 
+                         'f4', 'f4', 'f4', 'f4', 'f4', 'f4', 
+                         'f4', 'f4', 'f4', 'f4', 'i4'))
+        t.add_row((clusname, len(x), np.max(x)-np.min(x), nsteps, burnin, np.round(acc_frac,2), 
+                   fb_m[0], fb_m[1], fb_m[2], DG_m[0], DG_m[1], DG_m[2], 
+                   sS_m[0], sS_m[1], sS_m[2], sB_m[0], sB_m[1], sB_m[2], 
+                   0.0, 0.0, 0.0, 0.0, ok_fit ))       
+
         # MCMC iteration plot
         plt.clf()
         fig, axes = plt.subplots(ndim, 1, sharex=True, figsize=(8, 3*ndim))
         poly_labels    = ["$p_0$", "$p_1$", "$p_2$", "$p_3$", "$p_4$", "$p_5$", "$p_6$", "$p_7$", "$p_8$"]
-        mixture_labels = ["$f_b$","$\Delta G$", "$\sigma_{MS}$", "$\sigma_{BS}$"]
+        mixture_labels = ["$f_b$","$\Delta G$", "$\sigma_{SS}$", "$\sigma_{BS}$"]
         labels         = poly_labels[:(ndim-4)] + mixture_labels
         for ii in np.arange(ndim):
             axes[ii].plot(sampler.chain[:, :, ii].T, color="k", alpha=0.4)
@@ -184,108 +311,27 @@ def run_mcmc(x, y, xerr, yerr, theta0, nwalkers=32, nsteps=10000, burnin=5000,
 
         # Corner plot
         fig = corner.corner(samples, labels=labels, show_titles=True, title_kwargs={"fontsize": 15})
-        fig.savefig(plotdir+"mcmc_fit_corner_"+clusname+".png")
         plt.suptitle(clusname.replace("_", " "), fontsize=25)
+        fig.savefig(plotdir+"mcmc_fit_corner_"+clusname+".png")
         plt.close()
         
         # CMD plot
-        plt.figure(figsize=(8,8))
-        plt.errorbar(x,y,xerr=xerr, yerr=yerr, ls='none', label=None, c="grey", zorder=0)
-        plt.scatter(x,y, label=None, c="w")
-        xarr = np.linspace(np.min(x),np.max(x),100)
-        fb_simple=[]
-        if plot_max_likelihood:
-            # Plot the maximum likelihood result.
-            polynom = np.poly1d(theta0[:-4][::-1])
-            plt.plot(xarr, polynom(xarr), lw=2, c="grey", label="Max. likelihood fit")
-        # Plot some MCMC samples onto the data.
-        for p0,p1,p2,p3,p4,p5,p6,fb,DG,sM,sB in samples[np.random.randint(len(samples), size=30)]:
-            ms = np.poly1d([p6,p5,p4,p3,p2,p1,p0])
-            plt.plot(xarr, ms(xarr), color="b", alpha=0.2)
-            bs = np.poly1d([p6,p5,p4,p3,p2,p1,p0+DG])
-            plt.plot(xarr, bs(xarr), color="orange", alpha=0.2)
-            binaries = (y < ms(x) - 3 * sM)
-            fb_simple.append(np.sum(binaries)/len(x))
-            plt.scatter(x[binaries],y[binaries], label=None, c="r", s=30, lw=0.3, alpha=.04)
-        fb_simple = np.array(fb_simple)
-        # Plot the best-parameter result.
-        #polynom = np.poly1d([p6_m[0],p5_m[0],p4_m[0],p3_m[0],p2_m[0],p1_m[0],p0_m[0]])
-        plt.plot(xarr, ms(xarr), c='blue', label="MCMC main sequence samples", alpha=0.2)
-        plt.plot(xarr, bs(xarr), c='orange', label="MCMC binary sequence samples", alpha=0.2)
-        plt.xlabel(r"$BP-RP$", fontsize=22)
-        plt.ylabel(r"$G$", fontsize=22)
-        plt.legend(loc="upper right", fontsize=19)
-        # Annotate name of the cluster and binary fraction
-        ax = plt.gca()
-        plt.text(0.1, 0.2, clusname.replace("_", " "), horizontalalignment='left',
-                 verticalalignment='center', transform=ax.transAxes, fontsize=22)
-        plt.text(0.1, 0.1, r"$f_b={{{0:.2f}}}^{{+{1:.2f}}}_{{-{2:.2f}}}$".format(fb_m[0],fb_m[1],fb_m[2]), 
-                 horizontalalignment='left', verticalalignment='center', transform=ax.transAxes, fontsize=22)
-        ax.invert_yaxis()
-        plt.tight_layout()
-        plt.savefig(plotdir+"cmd_fit_mcmc_"+clusname+".png")
+        fb_simple    = cmd_plot(clusname, x, y, xerr, yerr, samples, t, 
+                                savefilename=plotdir+"cmd_fit_mcmc_"+clusname+".png", 
+                                color_background=1-ok_fit)
+        t['fb_3sScut_50'][0]   = fb_simple[0]
+        t['fb_3sScut_sigu'][0] = fb_simple[1]
+        t['fb_3sScut_sigl'][0] = fb_simple[2]
         plt.close()
         
-        # CMD residual plot
-        plt.figure(figsize=(4,8))
-        ax = plt.subplot(111)
-        # first of all, the base transformation of the data points is needed
-        base = plt.gca().transData
-        rot = transforms.Affine2D().rotate_deg(-90)
-        ax2 = ax.twinx() 
-        edges = [-1.3,.3]
-        kdearr = np.linspace(edges[0], edges[1],1000)
-        kderes = np.zeros(1000)
-        # Overplot the 30 realizations
-        for p0,p1,p2,p3,p4,p5,p6,fb,DG,sM,sB in samples[np.random.randint(len(samples), size=30)]:
-            ms = np.poly1d([p6,p5,p4,p3,p2,p1,p0])
-            # Compute Delta G_i
-            DGi  = (y - ms(x))[(y - ms(x)<edges[1]) & (y - ms(x)>edges[0])]
-            vals, bins, patches = plt.hist(-DGi, density=True, histtype="step", bins="fd", lw=2.5,
-                                           label="Gaia DR2 open clusters ($d < 1.5$ kpc)", alpha=.2, 
-                                           color="grey", transform= rot + base)
-            # Compute KDE
-            kde = gaussian_kde(y - ms(x), bw_method=.1)
-            kderes = kderes + kde.evaluate(kdearr)
-        plt.plot(-kdearr, kderes/30, c="k", lw=3, alpha=1, transform= rot + base)
-        # Overplot the 2 Gaussians #fb_m,DG_m,sM_m,sB_m
-        plt.plot(-kdearr, (1-fb_m[0]) * norm.pdf(kdearr, loc=0., scale=sM_m[0]), c="b", lw=3, 
-                 alpha=1, transform= rot + base)
-        plt.plot(-kdearr,   fb_m[0]   * norm.pdf(kdearr, loc=DG_m[0], scale=sB_m[0]), c="orange", lw=3, 
-                 alpha=1, transform= rot + base)
-        # Compute Chi2 (Residual KDE - 2 Gaussian fit)
-        fit_func = (1-fb_m[0]) * norm.pdf(kdearr, loc=0., scale=sM_m[0]) + fb_m[0] * norm.pdf(kdearr, loc=DG_m[0], scale=sB_m[0])
-        chi2 = np.sum( (kderes - fit_func)**2. )
-        ax.axhline(0.,      c="b", ls="dashed")
-        ax.axhline(DG_m[0], c="orange", ls="dashed")
-        # Beautify the plot
-        ax.set_ylabel(r"$G-P(BP-RP)$  [mag]") 
-        ax.set_xlabel(r"Density") 
-        ax2.set_xlim(0, np.max([1.2*np.max(kderes/30), 5.])) 
-        ax2.set_yticks([]) 
-        ax.set_ylim(edges[1], edges[0]) 
-        plt.text(0.25, 0.06, r"$\sigma_{{\rm MS}}={{{0:.2f}}}^{{+{1:.2f}}}_{{-{2:.2f}}}$".format(sM_m[0],sM_m[1],sM_m[2]), 
-                 horizontalalignment='left', verticalalignment='center', transform=ax.transAxes, fontsize=20)
-        plt.text(0.25, 0.5, r"$\Delta G={{{0:.2f}}}^{{+{1:.2f}}}_{{-{2:.2f}}}$".format(DG_m[0],DG_m[1],DG_m[2]), 
-                 horizontalalignment='left', verticalalignment='center', transform=ax.transAxes, fontsize=20)
-        plt.text(0.25, 0.75, r"$\sigma_{{\rm BS}}={{{0:.2f}}}^{{+{1:.2f}}}_{{-{2:.2f}}}$".format(sB_m[0],sB_m[1],sB_m[2]), 
-                 horizontalalignment='left', verticalalignment='center', transform=ax.transAxes, fontsize=20)
-        plt.savefig(plotdir+"cmd_fit_residuals_"+clusname+".png")
-        plt.tight_layout()
+        # CMD residual plot --> Save also the p-value of the KS test
+        KS_pvalue = cmd_residuals_plot(clusname, x, y, samples, t, 
+                                             savefilename=plotdir+"cmd_fit_residuals_"+clusname+".png", 
+                                             color_background=1-ok_fit)
+        t["KS_pvalue"][0] = KS_pvalue
         plt.close()
-
-        #  save / return the results as a one-row astropy table
-        t = Table(names=('clus', 'nb_MS_members', 'MS_width', 'nsteps', 'burnin', 'acc_frac', 
-                         'fb_50', 'fb_sigu', 'fb_sigl', 'DG_50', 'DG_sigu', 'DG_sigl', 
-                         'sM_50', 'sM_sigu', 'sM_sigl', 'sB_50', 'sB_sigu', 'sB_sigl', 
-                         'chi2', 'fb_simple_50', 'fb_simple_sigu', 'fb_simple_sigl'), 
-                  dtype=('S20', 'i4', 'f4', 'i4', 'i4', 'f4', 
-                         'f4', 'f4', 'f4', 'f4', 'f4', 'f4', 'f4', 'f4', 'f4', 'f4', 'f4', 'f4', 'f4', 'f4', 'f4', 'f4'))
-        t.add_row((clusname, len(x), np.max(x)-np.min(x), nsteps, burnin, np.round(acc_frac,2), 
-                   fb_m[0], fb_m[1], fb_m[2], DG_m[0], DG_m[1], DG_m[2], 
-                   sM_m[0], sM_m[1], sM_m[2], sB_m[0], sB_m[1], sB_m[2], chi2, 
-                   np.round(np.median(fb_simple),3), np.round(np.percentile(fb_simple, 84)-np.median(fb_simple),3), 
-                   np.round(np.median(fb_simple)-np.percentile(fb_simple, 16),3) ))       
+    
+        # save / return the results
         if save_results:
             t.write(plotdir + clusname + "_mcmc_res.fits")
         else:
@@ -294,13 +340,28 @@ def run_mcmc(x, y, xerr, yerr, theta0, nwalkers=32, nsteps=10000, burnin=5000,
         print("Not converged. You need to work on your code?")
         return None
 
-def run_pipeline_tarricq(ocdir="Tarricq_selected_members_OCs/",
-                 restabledir="data/mcmc_results_summary.fits",
-                 plotdir="im/mcmc/", ii0=0):
+def run_pipeline(which = "tarricq", OC_selection_conditions=[0.05, 0.25, 0.2, 0.5], ii0=0):
     """
-    Execute the MCMC model loop for all the files in ocdir.
+    Execute the MCMC model loop for all the files for either the "tarricq", "cantat", or "sim" OCs.
     Save the tabulated results in restabledir and the plots in plotdir.
     """
+    if which == "tarricq":
+        ocdir    = "data/Tarricq_selected_members_OCs/"
+        plotdir  = "im_mcmc/im_mcmc_tarricq/"
+        restable = "data/mcmc_results_tarricq_summary.fits"
+    elif which == "cantat":
+        ocdir    = "data/Cantat_selected_members_OCs_younger50Myr/"
+        plotdir  = "im_mcmc/im_mcmc_cantat/"
+        restable = "data/mcmc_results_cantat_summary.fits"
+    elif which == "sims":
+        ocdir    = "data/GOG_Simulations/Simulation_selected_members_OCs_9/"
+        plotdir  = "im_mcmc/mcmc_gausspriors_simulation/"
+        restable = "data/mcmc_results_summary_simulations_9.fits"
+    else:
+        raise ValueError("Not a valid 'which' parameter")
+    # Create output dir if necessary
+    if not os.path.exists(plotdir):
+        os.makedirs(plotdir)
     # Read (partial) results table if it exists
     if ii0 !=0:
         restable = Table.read(restabledir)
@@ -308,132 +369,53 @@ def run_pipeline_tarricq(ocdir="Tarricq_selected_members_OCs/",
     files = sorted(os.listdir(ocdir))    
     # Loop it away
     for ii in np.arange(ii0, len(files)):
+        # Read the membership table
         t = Table.read(ocdir + files[ii], format="ascii")
-        x    = t["bp_rp"]
-        xerr = t["bp_rp_error"]
-        y    = t["phot_g_mean_mag"]
-        yerr = t["phot_g_mean_mag_error"]
-        clusname = files[ii][:-27]
+        if which == "tarricq":
+            x    = t["bp_rp"]
+            xerr = t["bp_rp_error"]
+            y    = t["phot_g_mean_mag"]
+            yerr = t["phot_g_mean_mag_error"]
+            clusname = files[ii][:-27]
+        elif which == "cantat":
+            x    = t["BP-RP"]
+            xerr = np.sqrt( (2.5 * np.log10(1 + 1./t["phot_bp_mean_flux_over_error"]))**2. + 
+                            (2.5 * np.log10(1 + 1./t["phot_rp_mean_flux_over_error"]))**2. )
+            y    = t["Gmag"]
+            yerr = 2.5 * np.log10(1 + 1./t["phot_g_mean_flux_over_error"])
+            clusname = files[ii][:-26]
+        elif which == "sims":
+            x    = t["BP-RP"]
+            xerr = np.sqrt( t["sigBp"]**2. + t["sigRp"]**2. )
+            y    = t["G"]
+            yerr = t["sigG"]
+            clusname = files[ii][:-25]
 
         print("No.", ii, ":", clusname, "(", len(t), "stars )")
 
-        # Initial guess for ML fit
+        # Initial guess for ML fit to the CMD
         theta0 = [0.6, 5.67, -0.66, -0.32, 0.09, 0., 0., 0.2, -0.7, 0.05, 0.05]
         Nfit   = len(theta0)
         # First find the maximum likelihood values for the simple fit model.
         theta0 = maxlike(theta0, x, y, yerr)
         # Now run MCMC
-        result = run_mcmc(x, y, xerr, yerr, theta0, nwalkers=32, nsteps=8000, burnin=3000,
-                          plotdir=plotdir, clusname=clusname, save_results=False)
+        result = run_mcmc(x, y, xerr, yerr, theta0, 
+                          plotdir=plotdir, clusname=clusname, save_results=False,
+                          OC_selection_conditions=OC_selection_conditions)
         # Save the results
-        if ii == 0:
-            restable = result
-        else:
-            if result == None:
-                pass
-            else:
-                restable = vstack([restable, result])
-        restable.write(restabledir, overwrite=True)
-    
-def run_pipeline_cantat(ocdir="data/Cantat_selected_members_OCs_younger50Myr/",
-                 restabledir="data/mcmc_results_cantat_summary.fits",
-                 plotdir="im_mcmc/im_mcmc_cantat/", ii0=0):
-    """
-    Execute the MCMC model loop for all the files in ocdir.
-    Save the tabulated results in restabledir and the plots in plotdir.
-    """
-    # Read (partial) results table if it exists
-    if ii0 !=0:
-        restable = Table.read(restabledir)
-    # Read the list of files:
-    files = sorted(os.listdir(ocdir))    
-    # Loop it away
-    for ii in np.arange(ii0, len(files)):
-        t = Table.read(ocdir + files[ii], format="ascii")
-        x    = t["BP-RP"]
-        xerr = np.sqrt( (2.5 * np.log10(1 + 1./t["phot_bp_mean_flux_over_error"]))**2. + 
-                        (2.5 * np.log10(1 + 1./t["phot_rp_mean_flux_over_error"]))**2. )
-        y    = t["Gmag"]
-        yerr = 2.5 * np.log10(1 + 1./t["phot_g_mean_flux_over_error"])
-        clusname = files[ii][:-26]
-
-        print("No.", ii, ":", clusname, "(", len(t), "stars )")
-
-        # Initial guess for ML fit
-        theta0 = [0.6, 5.67, -0.66, -0.32, 0.09, 0., 0., 0.2, -0.7, 0.05, 0.05]
-        Nfit   = len(theta0)
-        # First find the maximum likelihood values for the simple fit model.
-        theta0 = maxlike(theta0, x, y, yerr)
-        # Now run MCMC
-        try:
-            result = run_mcmc(x, y, xerr, yerr, theta0, nwalkers=32, 
-                              plotdir=plotdir, clusname=clusname, save_results=False)
-        except:
-            pass
-        # Save the results
-        if result == None:
+        if result is None:
             pass
         else:
             if ii == 0:
-                restable = result
+                restab = result
             else:
-                restable = vstack([restable, result])
-            restable.write(restabledir, overwrite=True)
+                restab = vstack([restab, result])
+            print(restab)
+            restab.write(restable, overwrite=True, format="fits")
+            
+if __name__ == "__main__":
+    # Run the pipeline for all clusters
+    run_pipeline(which = "cantat",  ii0=0)
+    run_pipeline(which = "tarricq", ii0=0)
+    run_pipeline(which = "sims",    ii0=0)
     
-def run_pipeline_sims(ocdir="data/GOG_Simulations/Simulation_selected_members_OCs_0/",
-                      restabledir="data/mcmc_results_summary_gausspriors_simulation_0.fits",
-                      plotdir="im_mcmc/mcmc_gausspriors_simulation/", ii0=0):
-    """
-    Execute the MCMC model loop for all the files in ocdir.
-    Save the tabulated results in restabledir and the plots in plotdir.
-    """
-    # Read (partial) results table if it exists
-    if ii0 !=0:
-        restable = Table.read(restabledir)
-    # Read the list of files:
-    files = sorted(os.listdir(ocdir))    
-    # Loop it away
-    for ii in np.arange(ii0, len(files)):
-        t = Table.read(ocdir + files[ii], format="ascii")
-        x    = t["BP-RP"]
-        xerr = Table.Column([ t["sigBp"][ii]+t["sigRp"][ii] for ii in np.arange(0, len(t))])
-        y    = t["G"]
-        yerr = t["sigG"]
-        clusname = files[ii][:-25]
-
-        print("No.", ii, ":", clusname, "(", len(t), "stars )")
-
-        # Initial guess for ML fit
-        theta0 = [0.6, 5.67, -0.66, -0.32, 0.09, 0., 0., 0.2, -0.7, 0.05, 0.05]
-        Nfit   = len(theta0)
-        # First find the maximum likelihood values for the simple fit model.
-        theta0 = maxlike(theta0, x, y, yerr)
-        # Now run MCMC
-        try:
-            result = run_mcmc(x, y, xerr, yerr, theta0, nwalkers=32, 
-                              plotdir=plotdir, clusname=clusname, save_results=False)
-        except:
-            pass
-        # Save the results
-        if result == None:
-            pass
-        else:
-            if ii == 0:
-                restable = result
-            else:
-                restable = vstack([restable, result])
-            restable.write(restabledir, overwrite=True)
-
-if __name__ == "__main__":
-    # Run the pipeline for the Tarricq+2022 clusters
-    run_pipeline_tarricq(ocdir="data/Tarricq_selected_members_OCs/",
-                 restabledir="data/mcmc_results_tarricq_newpriors3.fits",
-                 plotdir="im_mcmc/im_mcmc_tarricq_newpriors3/", ii0=0)
-"""
-if __name__ == "__main__":
-    # Run the pipeline for the Cantat+2020 clusters
-    run_pipeline_cantat(ocdir="data/Cantat_selected_members_OCs_younger50Myr/",
-                 restabledir="data/mcmc_results_cantat_summary.fits",
-                 plotdir="im_mcmc/im_mcmc_cantat/", ii0=0)
-"""
-
