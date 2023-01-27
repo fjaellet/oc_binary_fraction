@@ -1,6 +1,6 @@
 # The binary fraction in open clusters with Gaia
 
-This repository contains the source code that reproduces the figures in [Donada et al. (2023)](arXiv link here).
+This repository contains the source code that reproduces the figures in [Donada et al. (2023)](https://arxiv.org/abs/2301.11061).
 
 ![BFage](im/age_BF_tot_scatterplot_auxmeanmass.png)
 
