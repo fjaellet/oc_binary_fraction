@@ -9,6 +9,7 @@ import time
 import emcee
 import corner
 from multiprocessing import Pool
+import parsec20_tools, extinction
 
 from matplotlib import pyplot as plt
 from matplotlib import transforms
@@ -348,15 +349,20 @@ def run_pipeline(which = "tarricq", OC_selection_conditions=[0.05, 0.25, 0.2, 0.
     if which == "tarricq":
         ocdir    = "data/Tarricq_selected_members_OCs/"
         plotdir  = "im_mcmc/im_mcmc_tarricq/"
-        restable = "data/mcmc_results_tarricq_summary.fits"
+        restabledir = "data/mcmc_results_tarricq_summary.fits"
     elif which == "cantat":
         ocdir    = "data/Cantat_selected_members_OCs_younger50Myr/"
         plotdir  = "im_mcmc/im_mcmc_cantat/"
-        restable = "data/mcmc_results_cantat_summary.fits"
+        restabledir = "data/mcmc_results_cantat_summary.fits"
     elif which == "sims":
         ocdir    = "data/GOG_Simulations/Simulation_selected_members_OCs_9/"
         plotdir  = "im_mcmc/mcmc_gausspriors_simulation/"
-        restable = "data/mcmc_results_summary_simulations_9.fits"
+        restabledir = "data/mcmc_results_summary_simulations_9.fits"
+    elif which == "hunt":
+        ocdir    = "data/"
+        plotdir  = "im_mcmc/mcmc_gausspriors_hunt/"
+        restabledir = "data/mcmc_results_hunt_summary.fits"
+        isoc     = parsec20_tools.Isochrones()
     else:
         raise ValueError("Not a valid 'which' parameter")
     # Create output dir if necessary
@@ -365,57 +371,85 @@ def run_pipeline(which = "tarricq", OC_selection_conditions=[0.05, 0.25, 0.2, 0.
     # Read (partial) results table if it exists
     if ii0 !=0:
         restable = Table.read(restabledir)
-    # Read the list of files:
-    files = sorted(os.listdir(ocdir))    
+        print(restable)
+    if which == "hunt":
+        # Read the summary table & membership table
+        clusters = Table.read(ocdir+"Hunt2023_clusters.fits")
+        members  = Table.read(ocdir+"Hunt2023_members.fits")
+        files    = clusters["name"][ (clusters["n_stars_tidal"] >= 30) & (clusters["distance_50"] <= 2000)]
+    else:
+        # Read the list of files:
+	    files = sorted(os.listdir(ocdir)) 
     # Loop it away
     for ii in np.arange(ii0, len(files)):
-        # Read the membership table
-        t = Table.read(ocdir + files[ii], format="ascii")
-        if which == "tarricq":
+        if which == "hunt":
+            t    = members[  members["name"]  == files[ii] ]
+            clus = clusters[ clusters["name"] == files[ii] ][0]
+            # deredden & select MS
+            AG, ABP, ARP = extinction.A0_to_AG_ABP_ARP(clus["a_v_50"], 
+                                                       t['phot_g_mean_mag'], t['phot_bp_mean_mag'],
+                                                       t['phot_rp_mean_mag'])
+            t['mg0']    =   t['phot_g_mean_mag'] - clus["distance_modulus_50"] - AG
+            t['bp_rp0'] =   t['bp_rp'] - (ABP - ARP)
+            mainseq = (2.9 * t['bp_rp0'] - 1.4 < t['mg0']) & \
+                      (2.9 * t['bp_rp0'] + 3.4 > t['mg0']) & \
+                      ( t['mg0'] > isoc.get_turnoff_G(clus["log_age_50"]) )
+            t = t[ mainseq & (t["within_r_t"] > 0.9) ]
+            # select CMD
             x    = t["bp_rp"]
-            xerr = t["bp_rp_error"]
+            xerr = np.sqrt( (2.5 * np.log10(1 + t["phot_bp_mean_flux_error"]/t["phot_bp_mean_flux"]))**2. + 
+				            (2.5 * np.log10(1 + t["phot_rp_mean_flux_error"]/t["phot_rp_mean_flux"]))**2. )
             y    = t["phot_g_mean_mag"]
-            yerr = t["phot_g_mean_mag_error"]
-            clusname = files[ii][:-27]
-        elif which == "cantat":
-            x    = t["BP-RP"]
-            xerr = np.sqrt( (2.5 * np.log10(1 + 1./t["phot_bp_mean_flux_over_error"]))**2. + 
-                            (2.5 * np.log10(1 + 1./t["phot_rp_mean_flux_over_error"]))**2. )
-            y    = t["Gmag"]
-            yerr = 2.5 * np.log10(1 + 1./t["phot_g_mean_flux_over_error"])
-            clusname = files[ii][:-26]
-        elif which == "sims":
-            x    = t["BP-RP"]
-            xerr = np.sqrt( t["sigBp"]**2. + t["sigRp"]**2. )
-            y    = t["G"]
-            yerr = t["sigG"]
-            clusname = files[ii][:-25]
+            yerr = 2.5 * np.log10(1 + t["phot_g_mean_flux_error"]/t["phot_g_mean_flux"])
+            clusname = files[ii]
+        else:
+	        # Read the membership table
+            t = Table.read(ocdir + files[ii], format="ascii")
+            if which == "tarricq":
+                x    = t["bp_rp"]
+                xerr = t["bp_rp_error"]
+                y    = t["phot_g_mean_mag"]
+                yerr = t["phot_g_mean_mag_error"]
+                clusname = files[ii][:-27]
+            elif which == "cantat":
+                x    = t["BP-RP"]
+                xerr = np.sqrt( (2.5 * np.log10(1 + 1./t["phot_bp_mean_flux_over_error"]))**2. + 
+                                (2.5 * np.log10(1 + 1./t["phot_rp_mean_flux_over_error"]))**2. )
+                y    = t["Gmag"]
+                yerr = 2.5 * np.log10(1 + 1./t["phot_g_mean_flux_over_error"])
+                clusname = files[ii][:-26]
+            elif which == "sims":
+                x    = t["BP-RP"]
+                xerr = np.sqrt( t["sigBp"]**2. + t["sigRp"]**2. )
+                y    = t["G"]
+                yerr = t["sigG"]
+                clusname = files[ii][:-25]
 
         print("No.", ii, ":", clusname, "(", len(t), "stars )")
 
-        # Initial guess for ML fit to the CMD
-        theta0 = [0.6, 5.67, -0.66, -0.32, 0.09, 0., 0., 0.2, -0.7, 0.05, 0.05]
-        Nfit   = len(theta0)
-        # First find the maximum likelihood values for the simple fit model.
-        theta0 = maxlike(theta0, x, y, yerr)
-        # Now run MCMC
-        result = run_mcmc(x, y, xerr, yerr, theta0, 
-                          plotdir=plotdir, clusname=clusname, save_results=False,
-                          OC_selection_conditions=OC_selection_conditions)
-        # Save the results
-        if result is None:
-            pass
-        else:
-            if ii == 0:
-                restab = result
+        if len(t) >=20:
+            # Initial guess for ML fit to the CMD
+            theta0 = [0.6, 5.67, -0.66, -0.32, 0.09, 0., 0., 0.2, -0.7, 0.05, 0.05]
+            Nfit   = len(theta0)
+            # First find the maximum likelihood values for the simple fit model.
+            theta0 = maxlike(theta0, x, y, yerr)
+            # Now run MCMC
+            result = run_mcmc(x, y, xerr, yerr, theta0, 
+                              plotdir=plotdir, clusname=clusname, save_results=False,
+                              OC_selection_conditions=OC_selection_conditions)
+            # Save the results
+            if result is None:
+                pass
             else:
-                restab = vstack([restab, result])
-            print(restab)
-            restab.write(restable, overwrite=True, format="fits")
+                if 'restable' not in locals():
+                    restable = result
+                print(restable)
+                restable.write(restabledir, overwrite=True, format="fits")
             
 if __name__ == "__main__":
     # Run the pipeline for all clusters
-    run_pipeline(which = "cantat",  ii0=0)
-    run_pipeline(which = "tarricq", ii0=0)
-    run_pipeline(which = "sims",    ii0=0)
+    run_pipeline(which = "hunt",  ii0=2240)
+    #run_pipeline(which = "cantat",  ii0=0)
+    #run_pipeline(which = "tarricq", ii0=0)
+    #run_pipeline(which = "sims",    ii0=0)
     
