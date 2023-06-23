@@ -443,12 +443,14 @@ def run_pipeline(which = "tarricq", OC_selection_conditions=[0.05, 0.25, 0.2, 0.
             else:
                 if 'restable' not in locals():
                     restable = result
+                else:
+                    restable = vstack([restable, result])
                 print(restable)
                 restable.write(restabledir, overwrite=True, format="fits")
             
 if __name__ == "__main__":
     # Run the pipeline for all clusters
-    run_pipeline(which = "hunt",  ii0=2240)
+    run_pipeline(which = "hunt",  ii0=694)
     #run_pipeline(which = "cantat",  ii0=0)
     #run_pipeline(which = "tarricq", ii0=0)
     #run_pipeline(which = "sims",    ii0=0)
